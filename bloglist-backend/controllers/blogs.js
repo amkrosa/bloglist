@@ -31,19 +31,21 @@ blogsRouter.post('/', async (request, response, next) => {
       ? jwt.verify(token, process.env.SECRET)
       : undefined;
     if (!token || !decodedToken.id) {
-      return response.status(401).json({ error: 'token missing or invalid' });
+      return response.status(401).json({
+        error: 'token missing or invalid'
+      });
     }
     if (!body.title || !body.url) {
       return response.status(400).end();
     }
-    const user = await User.findOne({});
+    const user = await User.findOne({ username: body.user });
     const blog = new Blog({
       title: body.title,
       author: body.author,
       content: body.content,
       url: body.url,
       likes: body.likes | 0,
-      user: user._id,
+      user: user._id
     });
     const savedBlog = await blog.save();
     user.blogs = user.blogs.concat(savedBlog._id);
@@ -61,13 +63,17 @@ blogsRouter.delete('/:id', async (request, response, next) => {
   const blog = await Blog.findById(request.params.id);
   console.log('blog: ' + blog);
   if (!request.token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' });
+    return response.status(401).json({
+      error: 'token missing or invalid'
+    });
   }
   if (blog.user.toString() === decodedToken.id.toString()) {
     await Blog.findByIdAndDelete(request.params.id);
     response.status(204).end();
   } else {
-    return response.status(401).json({ error: 'invalid user' });
+    return response.status(401).json({
+      error: 'invalid user'
+    });
   }
 });
 
@@ -79,9 +85,11 @@ blogsRouter.put('/:id', async (request, response, next) => {
       title: body.title || blogBeforeUpdate.title,
       author: body.author || blogBeforeUpdate.author,
       url: body.url || blogBeforeUpdate.url,
-      likes: body.likes || 0,
+      likes: body.likes || 0
     };
-    await Blog.findByIdAndUpdate(request.params.id, blog, { new: true });
+    await Blog.findByIdAndUpdate(request.params.id, blog, {
+      new: true
+    });
     response.status(200).end();
   } catch (e) {
     next(e);

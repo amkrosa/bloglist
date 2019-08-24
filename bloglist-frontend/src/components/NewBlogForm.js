@@ -1,21 +1,21 @@
-import React from 'react';
-import { Grid, Button, Typography, Box, Paper } from '@material-ui/core';
-import InputField from './InputField';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Grid, Button, Typography, Box, Paper } from "@material-ui/core";
+import InputField from "./InputField";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   box: {
-    width: '60%',
-    margin: '3% auto',
+    width: "60%",
+    margin: "3% auto"
   },
   paper: {
-    width: '60%',
+    width: "60%",
     margin: theme.spacing(2, 3),
-    padding: theme.spacing(4, 3),
+    padding: theme.spacing(4, 3)
   },
   item: {
-    margin: theme.spacing(2, 3),
-  },
+    margin: theme.spacing(2, 3)
+  }
 }));
 
 const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
@@ -26,8 +26,7 @@ const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
       alignItems="center"
       justify="center"
       spacing={3}
-      className={classes.box}
-    >
+      className={classes.box}>
       <Paper className={classes.paper}>
         <Grid item className={classes.item}>
           <Typography variant="h5">Add new blog</Typography>
@@ -42,8 +41,8 @@ const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
                 updateState({
                   newBlog: {
                     ...newBlog,
-                    title: target.value,
-                  },
+                    title: target.value
+                  }
                 })
               }
             />
@@ -55,8 +54,8 @@ const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
                 updateState({
                   newBlog: {
                     ...newBlog,
-                    content: target.value,
-                  },
+                    content: target.value
+                  }
                 })
               }
             />
@@ -68,8 +67,8 @@ const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
                 updateState({
                   newBlog: {
                     ...newBlog,
-                    url: target.value,
-                  },
+                    url: target.value
+                  }
                 })
               }
             />
@@ -78,8 +77,7 @@ const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
                 className={classes.item}
                 variant="contained"
                 color="primary"
-                type="submit"
-              >
+                type="submit">
                 submit
               </Button>
             </Grid>
