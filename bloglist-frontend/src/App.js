@@ -1,194 +1,82 @@
 import React, { useReducer, useEffect } from "react";
+
+import { connect } from "react-redux";
+import { setUser, setToken } from "./actions/userActions";
+import { clearNotification } from "./actions/notificationActions";
+
 import loginService from "./services/login";
 import blogService from "./services/blogs";
 import Login from "./components/Login";
 import Popup from "./components/Popup";
-import BlogList from "./components/BlogList";
+import BlogList from "./containers/BlogList";
 import NavBar from "./components/NavBar";
 import NewBlogForm from "./components/NewBlogForm";
 import Togglable from "./components/Togglable";
 
-const App = () => {
-  const [state, updateState] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      user: null,
-      username: "",
-      password: "",
-      blogs: [],
-      popup: {
-        message: "",
-        type: "",
-        status: false
-      },
-      newBlog: {
-        title: "",
-        content: "",
-        url: ""
-      }
-    }
-  );
-
-  const { blogs, user, username, password, popup, newBlog } = state;
-
+const App = props => {
   const blogFormRef = React.createRef();
 
-  useEffect(() => {
+  const { blogs, user, notification } = props;
+
+  console.log(blogs);
+
+  /*useEffect(() => {
     console.log("useeffect getall");
     //get notes
     blogService
       .getAll()
       .then(initialBlogs => updateState({ blogs: initialBlogs }));
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     console.log("useeffect login");
     //login system
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
+    console.log(loggedUserJSON);
     if (loggedUserJSON) {
+      console.log("went through if");
       const currentUser = JSON.parse(loggedUserJSON);
-      updateState({ user: currentUser });
-      blogService.setToken(currentUser.token);
+      props.setUser(currentUser);
     }
   }, []);
 
-  const promptPopup = (type, message) => {
-    updateState({
-      popup: {
-        status: true,
-        type,
-        message
-      }
-    });
-  };
-
-  const handleLogin = async e => {
-    e.preventDefault();
-    try {
-      const currentUser = await loginService.login({ username, password });
-      window.localStorage.setItem("loggedUser", JSON.stringify(currentUser));
-      blogService.setToken(currentUser.token);
-      updateState({
-        user: currentUser,
-        username: "",
-        password: ""
-      });
-    } catch (error) {
-      promptPopup("error", "An error has occured.");
-      console.error(error);
-    }
-  };
-
-  const handleLogout = () => {
-    window.localStorage.removeItem("loggedUser");
-    window.location.reload();
-  };
-
-  const handleNewBlog = async e => {
-    e.preventDefault();
-    //user.id doesnt work, find a way to get id from database in frontend
-    blogFormRef.current.toggleVisibility();
-    console.log(user);
-    try {
-      const newObject = {
-        title: newBlog.title,
-        author: user.name,
-        content: newBlog.content,
-        url: newBlog.url,
-        user: user.username
-      };
-      console.log(newObject);
-      const response = await blogService.create(newObject);
-      promptPopup("success", "Blog has been successfully created");
-      updateState({
-        blogs: blogs.concat(response),
-        newBlog: {
-          title: "",
-          content: "",
-          url: ""
-        }
-      });
-    } catch (e) {
-      promptPopup("error", "An error has occured.");
-      console.error(e);
-    }
-  };
-
-  const handleAddlike = async blog => {
-    try {
-      const newObject = {
-        ...blog,
-        likes: blog.likes + 1
-      };
-      const response = await blogService.update(blog.id, newObject);
-
-      const index = blogs.findIndex(item => item.id === blog.id);
-      const updatedBlogs = [
-        ...blogs.slice(0, index),
-        newObject,
-        ...blogs.slice(index + 1)
-      ];
-      updateState({
-        blogs: updatedBlogs
-      });
-    } catch (e) {
-      promptPopup("error", "An error has occured.");
-      console.error(e);
-    }
-  };
-  const handleDelete = async blog => {
-    try {
-      const response = await blogService.remove(blog.id);
-      promptPopup("success", "Blog has been successfully removed");
-      updateState({
-        blogs: blogs.filter(item => item.id !== blog.id)
-      });
-    } catch (e) {
-      promptPopup("error", "An error has occured.");
-      console.error(e);
-    }
-  };
-
   return (
     <>
-      <NavBar user={user} logout={handleLogout} />
+      <NavBar />
       <Popup
-        status={popup.status}
-        message={popup.message}
-        type={popup.type}
-        onClose={() =>
-          updateState({
-            popup: {
-              status: false,
-              message: ""
-            }
-          })
-        }
+        status={notification.status}
+        message={notification.content}
+        type={notification.type}
+        onClose={props.clearNotification}
       />
       {user ? (
         <>
-          <BlogList
-            blogs={blogs}
-            actions={{ onLike: handleAddlike, onDelete: handleDelete }}
-          />
+          <BlogList blogs={blogs} />
           <Togglable ref={blogFormRef}>
-            <NewBlogForm
-              newBlog={newBlog}
-              updateState={updateState}
-              onSubmit={handleNewBlog}
-            />
+            <NewBlogForm />
           </Togglable>
         </>
       ) : (
-        <Login
-          username={username}
-          password={password}
-          updateState={updateState}
-          handleLogin={handleLogin}
-        />
+        <Login />
       )}
     </>
   );
 };
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    blogs: state.blogs,
+    user: state.user,
+    notification: state.notification
+  };
+};
+
+const mapDispatchToProps = {
+  setUser,
+  clearNotification
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

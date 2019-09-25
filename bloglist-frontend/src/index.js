@@ -1,12 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Provider } from "react-redux";
+import store from "./store";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-ReactDOM.render(
-	<>
-		<CssBaseline />
-		<App />
-	</>,
-	document.getElementById('root'),
-);
+const render = () => {
+  ReactDOM.render(
+    <>
+      <Provider store={store}>
+        <CssBaseline />
+        <App />
+      </Provider>
+    </>,
+    document.getElementById("root")
+  );
+};
+
+render();
+store.subscribe(render);

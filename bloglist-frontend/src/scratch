@@ -1,0 +1,86 @@
+userreducer
+
+user: {
+    user: username,
+    token: token
+}
+
+notificationreducer
+
+notification: {
+    content: notificationText,
+    type: notificationType
+}
+
+  const promptPopup = (type, message) => {
+    updateState({
+      popup: {
+        status: true,
+        type,
+        message
+      }
+    });
+  };
+
+  const handleNewBlog = async e => {
+    e.preventDefault();
+    blogFormRef.current.toggleVisibility();
+    try {
+      const newObject = {
+        title: newBlog.title,
+        author: user.name,
+        content: newBlog.content,
+        url: newBlog.url,
+        user: user.username
+      };
+      console.log(newObject);
+      const response = await blogService.create(newObject);
+      promptPopup("success", "Blog has been successfully created");
+      updateState({
+        blogs: blogs.concat(response),
+        newBlog: {
+          title: "",
+          content: "",
+          url: ""
+        }
+      });
+    } catch (e) {
+      promptPopup("error", "An error has occured.");
+      console.error(e);
+    }
+  };
+
+  const handleAddlike = async blog => {
+    try {
+      const newObject = {
+        ...blog,
+        likes: blog.likes + 1
+      };
+      const response = await blogService.update(blog.id, newObject);
+
+      const index = blogs.findIndex(item => item.id === blog.id);
+      const updatedBlogs = [
+        ...blogs.slice(0, index),
+        newObject,
+        ...blogs.slice(index + 1)
+      ];
+      updateState({
+        blogs: updatedBlogs
+      });
+    } catch (e) {
+      promptPopup("error", "An error has occured.");
+      console.error(e);
+    }
+  };
+  const handleDelete = async blog => {
+    try {
+      const response = await blogService.remove(blog.id);
+      promptPopup("success", "Blog has been successfully removed");
+      updateState({
+        blogs: blogs.filter(item => item.id !== blog.id)
+      });
+    } catch (e) {
+      promptPopup("error", "An error has occured.");
+      console.error(e);
+    }
+  };

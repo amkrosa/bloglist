@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Blog from "./Blog";
+import Blog from "../components/Blog";
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -24,7 +24,7 @@ const BlogList = ({ blogs, actions }) => {
     ));
 
   return (
-    <Grid container alignItems="center" spacing={2}>
+    <Grid container alignItems='center' spacing={2}>
       {blogsComponents()}
     </Grid>
   );

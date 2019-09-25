@@ -18,9 +18,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Blog = ({ blog, onDelete, onEdit, onLike }) => {
+const Blog = ({ blog }) => {
   const [isExpanded, setExpanded] = useState(false);
   const currentUser = JSON.parse(window.localStorage.getItem("loggedUser"));
+
+  const onDelete = () => {};
+  const onLike = () => {};
 
   const toggleExpanded = () => {
     setExpanded(!isExpanded);
@@ -32,17 +35,17 @@ const Blog = ({ blog, onDelete, onEdit, onLike }) => {
       <Paper className={classes.paper}>
         {isExpanded ? (
           <>
-            <Typography onClick={toggleExpanded} variant="h5">
+            <Typography onClick={toggleExpanded} variant='h5'>
               {blog.title}
             </Typography>
             <Typography paragraph>{blog.content}</Typography>
-            <Typography align="center">
+            <Typography align='center'>
               <IconButton onClick={onLike}>
                 <LikeIcon />
               </IconButton>
               {blog.likes}
             </Typography>
-            <Typography variant="subtitle1" align="right">
+            <Typography variant='subtitle1' align='right'>
               {blog.author}
             </Typography>
             {currentUser.username === blog.user.username ? (
@@ -54,7 +57,7 @@ const Blog = ({ blog, onDelete, onEdit, onLike }) => {
             )}
           </>
         ) : (
-          <Typography variant="h5" onClick={toggleExpanded}>
+          <Typography variant='h5' onClick={toggleExpanded}>
             {blog.title}
           </Typography>
         )}
