@@ -5,11 +5,11 @@ import { setUser, setToken } from "./actions/userActions";
 import { clearNotification } from "./actions/notificationActions";
 import { initializeBlogs } from "./actions/blogActions"
 
-import Login from "./components/Login";
+import Login from "./containers/Login";
 import Popup from "./components/Popup";
 import BlogList from "./containers/BlogList";
 import NavBar from "./components/NavBar";
-import NewBlogForm from "./components/NewBlogForm";
+import NewBlogForm from "./containers/NewBlogForm";
 import Togglable from "./components/Togglable";
 
 const App = props => {
@@ -44,9 +44,7 @@ const App = props => {
       {user ? (
         <>
           <BlogList blogs={props.blogs} />
-          <Togglable ref={blogFormRef}>
-            <NewBlogForm />
-          </Togglable>
+            <NewBlogForm/>
         </>
       ) : (
         <Login />

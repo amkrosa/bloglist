@@ -5,7 +5,7 @@ import { login } from "../actions/userActions";
 import { setNotification } from "../actions/notificationActions";
 
 import { Grid, Button, Typography, Box } from "@material-ui/core";
-import InputField from "./InputField";
+import InputField from "../components/InputField";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
