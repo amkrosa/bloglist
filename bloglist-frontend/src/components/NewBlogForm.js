@@ -19,6 +19,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
+
+  const placeholder = () => {}
+
   const classes = useStyles();
   return (
     <Grid
@@ -32,45 +35,24 @@ const NewBlogForm = ({ newBlog, updateState, onSubmit }) => {
           <Typography variant="h5">Add new blog</Typography>
         </Grid>
         <Grid container alignItems="center" justify="center" spacing={3}>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={placeholder}>
             <InputField
               label="Title"
               icon="title"
-              value={newBlog.title}
-              onChange={({ target }) =>
-                updateState({
-                  newBlog: {
-                    ...newBlog,
-                    title: target.value
-                  }
-                })
-              }
+              value={''}
+              onChange={placeholder}
             />
             <InputField
               label="Content"
               icon="subject"
-              value={newBlog.content}
-              onChange={({ target }) =>
-                updateState({
-                  newBlog: {
-                    ...newBlog,
-                    content: target.value
-                  }
-                })
-              }
+              value={''}
+              onChange={placeholder}
             />
             <InputField
               label="URL"
               icon="link"
-              value={newBlog.url}
-              onChange={({ target }) =>
-                updateState({
-                  newBlog: {
-                    ...newBlog,
-                    url: target.value
-                  }
-                })
-              }
+              value={''}
+              onChange={placeholder}
             />
             <Grid item m={5}>
               <Button

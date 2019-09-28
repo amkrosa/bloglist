@@ -1,11 +1,10 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
 import { setUser, setToken } from "./actions/userActions";
 import { clearNotification } from "./actions/notificationActions";
+import { initializeBlogs } from "./actions/blogActions"
 
-import loginService from "./services/login";
-import blogService from "./services/blogs";
 import Login from "./components/Login";
 import Popup from "./components/Popup";
 import BlogList from "./containers/BlogList";
@@ -20,21 +19,14 @@ const App = props => {
 
   console.log(blogs);
 
-  /*useEffect(() => {
-    console.log("useeffect getall");
-    //get notes
-    blogService
-      .getAll()
-      .then(initialBlogs => updateState({ blogs: initialBlogs }));
-  }, []);*/
+  useEffect(()=>{
+    props.initializeBlogs()
+  },[])
 
   useEffect(() => {
-    console.log("useeffect login");
-    //login system
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
     console.log(loggedUserJSON);
     if (loggedUserJSON) {
-      console.log("went through if");
       const currentUser = JSON.parse(loggedUserJSON);
       props.setUser(currentUser);
     }
@@ -51,7 +43,7 @@ const App = props => {
       />
       {user ? (
         <>
-          <BlogList blogs={blogs} />
+          <BlogList blogs={props.blogs} />
           <Togglable ref={blogFormRef}>
             <NewBlogForm />
           </Togglable>
@@ -73,7 +65,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setUser,
-  clearNotification
+  clearNotification,
+  initializeBlogs
 };
 
 export default connect(

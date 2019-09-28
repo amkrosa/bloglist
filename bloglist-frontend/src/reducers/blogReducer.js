@@ -10,6 +10,8 @@ export default (state = initialState, action) => {
       return null;
     case "ADD_VOTE":
       return null;
+    case "INIT_BLOGS":
+      return action.data
     default:
       return state;
   }
