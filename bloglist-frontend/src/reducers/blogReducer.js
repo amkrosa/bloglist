@@ -5,7 +5,7 @@ export default (state = initialState, action) => {
     case "ADD_BLOG":
       return [...state, action.data];
     case "DELETE_BLOG":
-      return null;
+      return state.filter(element=>element.id!==action.data.id);
     case "UPDATE_BLOG":
       return null;
     case "ADD_VOTE":

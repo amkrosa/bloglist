@@ -18,12 +18,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, onDelete, onLike }) => {
   const [isExpanded, setExpanded] = useState(false);
   const currentUser = JSON.parse(window.localStorage.getItem("loggedUser"));
-
-  const onDelete = () => {};
-  const onLike = () => {};
 
   const toggleExpanded = () => {
     setExpanded(!isExpanded);

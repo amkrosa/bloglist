@@ -3,6 +3,9 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Blog from "../components/Blog";
 
+import { connect } from "react-redux"
+import { addVote, deleteBlog } from "../actions/blogActions";
+
 const useStyles = makeStyles(theme => ({
   box: {
     width: "60%",
@@ -11,15 +14,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BlogList = ({ blogs, actions }) => {
+const BlogList = props => {
   const classes = useStyles();
   const blogsComponents = () =>
-    blogs.map(blog => (
+    props.blogs.map(blog => (
       <Blog
         key={blog.id}
         blog={blog}
-        onDelete={() => actions.onDelete(blog)}
-        onLike={() => actions.onLike(blog)}
+        onDelete={() => props.deleteBlog(blog.id)}
+        onLike={() => props.addVote(blog.id)}
       />
     ));
 
@@ -30,4 +33,14 @@ const BlogList = ({ blogs, actions }) => {
   );
 };
 
-export default BlogList;
+const mapStateToProps = state => {
+  return {
+    blogs: state.blogs
+  }
+}
+const mapDispatchToProps = {
+  addVote,
+  deleteBlog
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(BlogList);

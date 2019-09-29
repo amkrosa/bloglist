@@ -10,7 +10,15 @@ export const addBlog = content => {
   }
 };
 
-export const deleteBlog = id => {};
+export const deleteBlog = id => {
+  return async dispatch => {
+    await blogService.remove(id)
+    dispatch({
+      type: 'DELETE_BLOG',
+      data: {id}
+    })
+  }
+};
 
 export const updateBlog = id => {};
 
