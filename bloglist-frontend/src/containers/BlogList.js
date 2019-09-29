@@ -22,7 +22,7 @@ const BlogList = props => {
         key={blog.id}
         blog={blog}
         onDelete={() => props.deleteBlog(blog.id)}
-        onLike={() => props.addVote(blog.id)}
+        onLike={() => props.addVote(blog)}
       />
     ));
 

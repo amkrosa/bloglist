@@ -9,7 +9,12 @@ export default (state = initialState, action) => {
     case "UPDATE_BLOG":
       return null;
     case "ADD_VOTE":
-      return null;
+      const index = state.findIndex(item => item.id === action.data.id);
+      return [
+            ...state.slice(0, index),
+            action.data,
+            ...state.slice(index + 1)
+          ];
     case "INIT_BLOGS":
       return action.data
     default:

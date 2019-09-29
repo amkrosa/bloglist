@@ -22,7 +22,19 @@ export const deleteBlog = id => {
 
 export const updateBlog = id => {};
 
-export const addVote = id => {};
+export const addVote = content => {
+  return async dispatch => {
+    const newObject = {
+      ...content,
+      likes: content.likes+1
+    }
+    await blogService.update(content.id, newObject)
+    dispatch({
+      type: 'ADD_VOTE',
+      data: newObject
+    })
+  }
+};
 
 export const initializeBlogs = () => {
   return async dispatch => {
