@@ -35,12 +35,7 @@ const App = props => {
   return (
     <>
       <NavBar />
-      <Popup
-        status={notification.status}
-        message={notification.content}
-        type={notification.type}
-        onClose={props.clearNotification}
-      />
+      <Popup/>
       {user ? (
         <>
           <BlogList blogs={props.blogs} />
@@ -63,7 +58,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setUser,
-  clearNotification,
   initializeBlogs
 };
 

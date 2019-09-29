@@ -13,7 +13,10 @@ import {
 import { amber, green } from '@material-ui/core/colors';
 import clsx from 'clsx';
 
-const Popup = ({ status, onClose, message, type }) => {
+import { connect } from 'react-redux'
+import { clearNotification, setTimedNotification } from '../actions/notificationActions'
+
+const Popup = (props) => {
   const useStyles = makeStyles(theme => ({
     success: {
       backgroundColor: green[600],
@@ -48,27 +51,27 @@ const Popup = ({ status, onClose, message, type }) => {
   };
 
   const classes = useStyles();
-  const Icon = type ? variantIcon[type] : variantIcon['info'];
+  const Icon = props.notification.category ? variantIcon[props.notification.category] : variantIcon['info'];
 
   return (
     <>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         key={'bottom, center'}
-        open={status}
-        onClose={onClose}
+        open={props.notification.status}
+        onClose={props.clearNotification}
         autoHideDuration={3000}
         ContentProps={{
           'aria-describedby': 'message-id',
         }}
       >
         <SnackbarContent
-          className={classes[type]}
+          className={classes[props.notification.category]}
           aria-describedby="client-snackbar"
           message={
             <span id="client-snackbar" className={classes.message}>
               <Icon className={clsx(classes.icon, classes.iconVariant)} />
-              {message}
+              {props.notification.content}
             </span>
           }
           action={[
@@ -76,7 +79,7 @@ const Popup = ({ status, onClose, message, type }) => {
               key="close"
               aria-label="close"
               color="inherit"
-              onClick={onClose}
+              onClick={props.clearNotification}
             >
               <CloseIcon className={classes.icon} />
             </IconButton>,
@@ -87,4 +90,15 @@ const Popup = ({ status, onClose, message, type }) => {
   );
 };
 
-export default Popup;
+const mapStateToProps = state => {
+  return {
+    notification: state.notification
+  };
+};
+
+const mapDispatchToProps = {
+  clearNotification,
+  setTimedNotification
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Popup);

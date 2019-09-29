@@ -1,15 +1,15 @@
 const initialState = {
-  status: "",
+  status: false,
   content: "",
-  type: ""
+  category: ""
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case "SET_NOTIFICATION":
-      return null;
+      return action.data;
     case "CLEAR_NOTIFICATION":
-      return null;
+      return action.data;
     default:
       return state;
   }
