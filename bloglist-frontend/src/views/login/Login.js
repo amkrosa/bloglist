@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import { login } from "../actions/userActions";
-import { setNotification } from "../actions/notificationActions";
+import { login } from "../../actions/authActions";
+import { setNotification } from "../../actions/notificationActions";
+
+import { useHistory } from "react-router-dom";
 
 import { Grid, Button, Typography, Box } from "@material-ui/core";
-import InputField from "../components/InputField";
+import InputField from "../common/InputField";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -22,16 +24,16 @@ const useStyles = makeStyles(theme => ({
 const Login = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let history = useHistory();
 
   const handleLogin = e => {
     e.preventDefault();
     try {
       props.login(username, password);
-      console.log(props.user);
       //window.localStorage.setItem("loggedUser", JSON.stringify(props.user));
-      console.log("localstorage: ", window.localStorage.getItem("loggedUser"));
       setUsername("");
       setPassword("");
+      history.push("/");
     } catch (error) {
       props.setNotification("error", "An error has occured.");
       console.error(error);

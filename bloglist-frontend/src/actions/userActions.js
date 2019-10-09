@@ -1,40 +1,15 @@
-import blogService from "../services/blogs";
-import loginService from "../services/login";
+import userService from "../services/users";
 
-export const login = (username, password) => {
+export const initializeUsers = () => {
   return async dispatch => {
-    const user = await loginService.login({ username, password });
-    blogService.setToken(user.token);
-    window.localStorage.setItem("loggedUser", JSON.stringify(user));
+    const users = await userService.getAll();
     dispatch({
-      type: "LOGIN",
-      data: user
+      type: "INIT_USERS",
+      data: users
     });
   };
 };
-export const logout = () => {
-  return dispatch => {
-    blogService.setToken(null);
-    dispatch({
-      type: "LOGOUT"
-    });
-  };
-};
-export const setUser = user => {
-  return dispatch => {
-    blogService.setToken(user.token);
-    dispatch({
-      type: "SET_USER",
-      data: user
-    });
-  };
-};
-export const setToken = token => {
-  return dispatch => {
-    blogService.setToken(token);
-    dispatch({
-      type: "SET_TOKEN",
-      data: token
-    });
-  };
-};
+
+//selectors
+export const getUserById = (state, id) =>
+  state.filter(user => user.id === id)[0];

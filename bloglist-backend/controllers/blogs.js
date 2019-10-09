@@ -1,18 +1,18 @@
-const blogsRouter = require('express').Router();
-const Blog = require('../models/blog');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
+const blogsRouter = require("express").Router();
+const Blog = require("../models/blog");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
-blogsRouter.get('/', async (request, response, next) => {
+blogsRouter.get("/", async (request, response, next) => {
   try {
-    const blogs = await Blog.find({}).populate('user');
+    const blogs = await Blog.find({}).populate("user");
     response.json(blogs.map(blog => blog.toJSON()));
   } catch (e) {
     next(e);
   }
 });
 
-blogsRouter.get('/:id', async (request, response, next) => {
+blogsRouter.get("/:id", async (request, response, next) => {
   try {
     const requestedBlog = await Blog.findById(request.params.id);
     requestedBlog
@@ -23,7 +23,18 @@ blogsRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-blogsRouter.post('/', async (request, response, next) => {
+blogsRouter.get("/:id/comments", async (request, response, next) => {
+  try {
+    const requestedBlog = await Blog.findById(request.params.id);
+    requestedBlog
+      ? response.json(requestedBlog.toJSON().comments)
+      : response.status(404).end();
+  } catch (e) {
+    next(e);
+  }
+});
+
+blogsRouter.post("/", async (request, response, next) => {
   const token = request.token;
   try {
     const body = request.body;
@@ -32,7 +43,7 @@ blogsRouter.post('/', async (request, response, next) => {
       : undefined;
     if (!token || !decodedToken.id) {
       return response.status(401).json({
-        error: 'token missing or invalid'
+        error: "token missing or invalid"
       });
     }
     if (!body.title || !body.url) {
@@ -56,15 +67,15 @@ blogsRouter.post('/', async (request, response, next) => {
   }
 });
 
-blogsRouter.delete('/:id', async (request, response, next) => {
+blogsRouter.delete("/:id", async (request, response, next) => {
   const decodedToken = request.token
     ? jwt.verify(request.token, process.env.SECRET)
     : undefined;
   const blog = await Blog.findById(request.params.id);
-  console.log('blog: ' + blog);
+  console.log("blog: " + blog);
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({
-      error: 'token missing or invalid'
+      error: "token missing or invalid"
     });
   }
   if (blog.user.toString() === decodedToken.id.toString()) {
@@ -72,12 +83,12 @@ blogsRouter.delete('/:id', async (request, response, next) => {
     response.status(204).end();
   } else {
     return response.status(401).json({
-      error: 'invalid user'
+      error: "invalid user"
     });
   }
 });
 
-blogsRouter.put('/:id', async (request, response, next) => {
+blogsRouter.put("/:id", async (request, response, next) => {
   try {
     const body = request.body;
     const blogBeforeUpdate = await Blog.findById(request.params.id);
@@ -87,6 +98,24 @@ blogsRouter.put('/:id', async (request, response, next) => {
       url: body.url || blogBeforeUpdate.url,
       likes: body.likes || 0
     };
+    await Blog.findByIdAndUpdate(request.params.id, blog, {
+      new: true
+    });
+    response.status(200).end();
+  } catch (e) {
+    next(e);
+  }
+});
+
+blogsRouter.post("/:id/comments", async (request, response, next) => {
+  try {
+    const body = request.body;
+    const blogBeforeUpdate = await Blog.findById(request.params.id);
+    const blog = {
+      ...blogBeforeUpdate.toObject(),
+      comments: blogBeforeUpdate.comments.concat(body.comment)
+    };
+    console.log(blog);
     await Blog.findByIdAndUpdate(request.params.id, blog, {
       new: true
     });
