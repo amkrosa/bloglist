@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import { getUserById } from "./actions/userActions";
 import { getBlogById } from "./actions/blogActions";
 
-import Login from "./containers/Login";
-import BlogList from "./containers/BlogList";
-import Users from "./components/Users";
-import User from "./components/User";
+import Login from "./views/login/Login";
+import BlogList from "./views/blog/BlogList";
+import Users from "./views/user/Users";
+import User from "./views/user/User";
 import ProtectedRoute from "./lib/ProtectedRoute";
 
-import { Route, Redirect, Switch } from "react-router-dom";
-import Home from "./components/Home";
-import Blog from "./components/Blog";
+import { Route, Switch } from "react-router-dom";
+import Home from "./views/home/Home";
+import Blog from "./views/blog/Blog";
 
 const Main = props => {
   return (

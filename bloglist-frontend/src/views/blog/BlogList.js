@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
-import Blog from "../components/Blog";
+import Blog from "./Blog";
 import NewBlogForm from "./NewBlogForm";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { connect } from "react-redux";
-import {
-  addVote,
-  deleteBlog,
-  initializeBlogs
-} from "../../actions/blogActions";
+import { initializeBlogs } from "../../actions/blogActions";
 import Box from "../common/Box";
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -39,12 +35,18 @@ const BlogList = props => {
     props.initializeBlogs();
   }, []);
 
-  const blogsComponents = () =>
-    props.blogs.map(blog => <Blog key={blog.id} blog={blog} />);
-
-  return (
-    <Box className={classes.root}>
-      {props.pending ? (
+  const blogsComponents = () => {
+    const blogs = props.blogs.map(blog => <Blog key={blog.id} blog={blog} />);
+    return (
+      <>
+        {blogs}
+        <NewBlogForm />
+      </>
+    );
+  };
+  const delaySpinner = () => {
+    const id = setTimeout(
+      () => (
         <Box className={classes.spinnerWrapper}>
           <Grid
             container
@@ -56,10 +58,14 @@ const BlogList = props => {
             <CircularProgress />
           </Grid>
         </Box>
-      ) : (
-        blogsComponents()
-      )}
-      <NewBlogForm />
+      ),
+      500
+    );
+  };
+
+  return (
+    <Box className={classes.root}>
+      {props.pending ? delaySpinner() : blogsComponents()}
     </Box>
   );
 };

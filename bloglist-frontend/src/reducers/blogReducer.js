@@ -1,3 +1,5 @@
+import { replaceItemById } from "../lib/helpers";
+
 const initialState = {
   pending: false,
   blogs: [],
@@ -13,17 +15,17 @@ export default (state = initialState, action) => {
     case "UPDATE_BLOG":
       return null;
     case "ADD_VOTE":
-      const index = state.blogs.findIndex(item => item.id === action.data.id);
       return {
         ...state,
-        blogs: [
-          ...state.blogs.slice(0, index),
-          action.data,
-          ...state.blogs.slice(index + 1)
-        ]
+        blogs: replaceItemById(action.data, action.data.id, state.blogs)
       };
+
     case "ADD_COMMENT":
-      const indexOf = state.blogs.findIndex(item => item.id === action.data.id);
+      return {
+        ...state,
+        blogs: replaceItemById(action.data, action.data.id, state.blogs)
+      };
+    /*const indexOf = state.blogs.findIndex(item => item.id === action.data.id);
       return {
         ...state,
         blogs: [
@@ -31,7 +33,7 @@ export default (state = initialState, action) => {
           action.data,
           ...state.blogs.slice(indexOf + 1)
         ]
-      };
+      };*/
     case "INIT_BLOGS_PENDING":
       return { ...state, pending: true };
     case "INIT_BLOGS_SUCCESS":

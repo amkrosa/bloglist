@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import Box from "./Box";
+import Box from "../common/Box";
 
 const Home = props => {
   return (

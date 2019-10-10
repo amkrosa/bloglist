@@ -18,23 +18,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Form = ({ children, title, onSubmit }) => {
-
   const classes = useStyles();
   return (
     <Grid
       container
-      alignItems="center"
-      justify="center"
+      alignItems='center'
+      justify='center'
       spacing={3}
       className={classes.box}>
       <Paper className={classes.paper}>
-        <Grid item className={classes.item}>
-          <Typography variant="h5">{title}</Typography>
-        </Grid>
-        <Grid container alignItems="center" justify="center" spacing={3}>
-          <form onSubmit={onSubmit}>
-            {children}
-          </form>
+        {title ? (
+          <Grid item className={classes.item}>
+            <Typography variant='h5'>{title}</Typography>
+          </Grid>
+        ) : null}
+        <Grid container alignItems='center' justify='center' spacing={3}>
+          <form onSubmit={onSubmit}>{children}</form>
         </Grid>
       </Paper>
     </Grid>

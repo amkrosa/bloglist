@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Typography, Paper, IconButton } from "@material-ui/core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -7,6 +7,9 @@ import Box from "../common/Box";
 import LikeIcon from "@material-ui/icons/ThumbUp";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
+import Comment from "./Comment";
+import NewCommentForm from "./NewCommentForm";
+import { generateId } from "../../lib/helpers";
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -54,6 +57,17 @@ const Blog = ({ blog, full = false, ...props }) => {
               ) : (
                 ""
               )}
+              <Grid
+                container
+                direction='column'
+                justify='center'
+                alignItems='center'>
+                <Typography variant='h6'>Comments</Typography>
+                {blog.comments.map(comment => (
+                  <Comment key={generateId()}>{comment}</Comment>
+                ))}
+                <NewCommentForm blog={blog} />
+              </Grid>
             </>
           ) : (
             <Typography

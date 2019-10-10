@@ -7,8 +7,8 @@ import { initializeBlogs } from "./actions/blogActions";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Popup from "./components/Popup";
+import Navbar from "./views/navbar/Navbar";
+import Popup from "./views/common/Popup";
 import Main from "./Main";
 
 const App = props => {
