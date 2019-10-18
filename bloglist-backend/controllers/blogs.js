@@ -46,7 +46,7 @@ blogsRouter.post("/", async (request, response, next) => {
         error: "token missing or invalid"
       });
     }
-    if (!body.title || !body.url) {
+    if (!body.title) {
       return response.status(400).end();
     }
     const user = await User.findOne({ username: body.user });
@@ -55,6 +55,7 @@ blogsRouter.post("/", async (request, response, next) => {
       author: body.author,
       content: body.content,
       url: body.url,
+      date: new Date(Date.now()),
       likes: body.likes | 0,
       user: user._id
     });

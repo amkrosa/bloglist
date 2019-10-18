@@ -8,10 +8,16 @@ import InputField from "../common/InputField";
 
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   item: {
     margin: theme.spacing(2, 3)
+  },
+  paper: {
+    width: "60%",
+    margin: "0 auto",
+    padding: theme.spacing(4, 3)
   }
 }));
 
@@ -41,33 +47,35 @@ const NewBlogForm = props => {
   };
 
   return (
-    <Form onSubmit={submit}>
-      <InputField
-        label='Title'
-        icon='title'
-        value={title}
-        onChange={({ target }) => setTitle(target.value)}
-      />
-      <InputField
-        label='Content'
-        icon='subject'
-        value={content}
-        onChange={({ target }) => setContent(target.value)}
-      />
-      <InputField
-        label='URL'
-        icon='link'
-        value={url}
-        onChange={({ target }) => setUrl(target.value)}
-      />
-      <Button
-        className={classes.item}
-        variant='contained'
-        color='primary'
-        type='submit'>
-        submit
-      </Button>
-    </Form>
+    <Paper className={classes.paper}>
+      <Form onSubmit={submit}>
+        <InputField
+          label='Title'
+          icon='title'
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
+        />
+        <InputField
+          label='Content'
+          icon='subject'
+          value={content}
+          onChange={({ target }) => setContent(target.value)}
+        />
+        <InputField
+          label='URL'
+          icon='link'
+          value={url}
+          onChange={({ target }) => setUrl(target.value)}
+        />
+        <Button
+          className={classes.item}
+          variant='contained'
+          color='primary'
+          type='submit'>
+          submit
+        </Button>
+      </Form>
+    </Paper>
   );
 };
 

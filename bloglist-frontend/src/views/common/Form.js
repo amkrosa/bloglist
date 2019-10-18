@@ -7,18 +7,14 @@ const useStyles = makeStyles(theme => ({
     width: "60%",
     margin: "3% auto"
   },
-  paper: {
-    width: "60%",
-    margin: theme.spacing(2, 3),
-    padding: theme.spacing(4, 3)
-  },
   item: {
     margin: theme.spacing(2, 3)
   }
 }));
 
-const Form = ({ children, title, onSubmit }) => {
+const Form = ({ children, title, onSubmit, paper = true }) => {
   const classes = useStyles();
+
   return (
     <Grid
       container
@@ -26,16 +22,14 @@ const Form = ({ children, title, onSubmit }) => {
       justify='center'
       spacing={3}
       className={classes.box}>
-      <Paper className={classes.paper}>
-        {title ? (
-          <Grid item className={classes.item}>
-            <Typography variant='h5'>{title}</Typography>
-          </Grid>
-        ) : null}
-        <Grid container alignItems='center' justify='center' spacing={3}>
-          <form onSubmit={onSubmit}>{children}</form>
+      {title ? (
+        <Grid item className={classes.item}>
+          <Typography variant='h5'>{title}</Typography>
         </Grid>
-      </Paper>
+      ) : null}
+      <Grid container alignItems='center' justify='center' spacing={3}>
+        <form onSubmit={onSubmit}>{children}</form>
+      </Grid>
     </Grid>
   );
 };

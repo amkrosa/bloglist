@@ -25,15 +25,6 @@ export default (state = initialState, action) => {
         ...state,
         blogs: replaceItemById(action.data, action.data.id, state.blogs)
       };
-    /*const indexOf = state.blogs.findIndex(item => item.id === action.data.id);
-      return {
-        ...state,
-        blogs: [
-          ...state.blogs.slice(0, indexOf),
-          action.data,
-          ...state.blogs.slice(indexOf + 1)
-        ]
-      };*/
     case "INIT_BLOGS_PENDING":
       return { ...state, pending: true };
     case "INIT_BLOGS_SUCCESS":

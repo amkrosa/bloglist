@@ -21,7 +21,10 @@ const useStyles = makeStyles(theme => ({
     marginRight: -12
   },
   paper: {
-    padding: theme.spacing(2, 1)
+    padding: "1em"
+  },
+  text: {
+    margin: "1em"
   }
 }));
 
@@ -34,8 +37,10 @@ const Blog = ({ blog, full = false, ...props }) => {
         <Paper className={classes.paper}>
           {full ? (
             <>
-              <Typography variant='h5'>{blog.title}</Typography>
-              <Typography paragraph>{blog.content}</Typography>
+              <Typography variant='h4'>{blog.title}</Typography>
+              <Typography paragraph className={classes.text}>
+                {blog.content}
+              </Typography>
               <Typography align='center'>
                 <IconButton onClick={() => props.addVote(blog)}>
                   <LikeIcon />

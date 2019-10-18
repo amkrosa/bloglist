@@ -12,6 +12,7 @@ import ProtectedRoute from "./lib/ProtectedRoute";
 import { Route, Switch } from "react-router-dom";
 import Home from "./views/home/Home";
 import Blog from "./views/blog/Blog";
+import Profile from "./views/profile/Profile";
 
 const Main = props => {
   return (
@@ -40,6 +41,9 @@ const Main = props => {
       <Route exact path='/login'>
         <Login />
       </Route>
+      <ProtectedRoute exact path='/profile'>
+        <Profile />
+      </ProtectedRoute>
     </Switch>
   );
 };

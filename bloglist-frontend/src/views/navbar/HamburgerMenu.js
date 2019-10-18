@@ -3,6 +3,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import { Link } from "react-router-dom";
 
 const HamburgerMenu = props => {
   const [anchorElement, setAnchorElement] = React.useState(null);
@@ -31,9 +32,13 @@ const HamburgerMenu = props => {
         keepMounted
         open={Boolean(anchorElement)}
         onClose={handleClose}>
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <div style={{ textDecoration: "none" }}>
+          <MenuItem component={Link} to='/profile'>
+            Profile
+          </MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </div>
       </Menu>
     </div>
   );

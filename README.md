@@ -39,6 +39,7 @@ Home page:
 
 Users:
 
+- [ ] Profile page
 - [ ] Able to delete account
 - [ ] Able to add avatar
 - [ ] Able change user's name and password

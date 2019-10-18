@@ -9,6 +9,7 @@ import { initializeBlogs } from "../../actions/blogActions";
 import Box from "../common/Box";
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import BlogCard from "./BlogCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,7 +37,9 @@ const BlogList = props => {
   }, []);
 
   const blogsComponents = () => {
-    const blogs = props.blogs.map(blog => <Blog key={blog.id} blog={blog} />);
+    const blogs = props.blogs.map(blog => (
+      <BlogCard key={blog.id} blog={blog} />
+    ));
     return (
       <>
         {blogs}

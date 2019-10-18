@@ -13,3 +13,5 @@ export const initializeUsers = () => {
 //selectors
 export const getUserById = (state, id) =>
   state.filter(user => user.id === id)[0];
+
+export const getCurrentUser = state => getUserById(state.users, state.auth.id);
