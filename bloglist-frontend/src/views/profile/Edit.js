@@ -32,6 +32,7 @@ const Edit = props => {
         <InputField
           password
           value={oldPassword}
+          required
           onChange={({ target }) => setOldPassword(target.value)}
           label='Old password'></InputField>
         <InputField

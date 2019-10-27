@@ -36,13 +36,12 @@ export const addVote = blog => {
   };
 };
 
+
 export const addComment = (blog, comment) => {
   return async dispatch => {
-    const newBlog = {
-      ...blog,
-      comments: blog.comments.concat(comment)
-    };
-    await blogService.update(blog.id, newBlog);
+    const newComment = await blogService.comment(blog.id, comment);
+    console.log(newComment)
+    const newBlog = {...blog, comments: blog.comments.concat(newComment)}
     dispatch({
       type: "ADD_COMMENT",
       data: newBlog
@@ -70,7 +69,28 @@ export const initializeBlogs = () => {
   };
 };
 
+/*export const initializeComments = (blog) => {
+  return async dispatch => {
+      const comments = await blogService.getComments(blog.id);
+      console.log(comments)
+      const newBlog = {...blog, comments}
+      dispatch({
+        type: "INIT_COMMENTS",
+        data: newBlog
+      });
+    }
+  };*/
+
 //selectors
 
 export const getBlogById = (state, id) =>
   state.blogs.filter(blog => blog.id === id)[0];
+
+export const getBlogsMostPopular = (state, n) => {
+  return state.blogs.blogs.sort((a,b)=>a.likes-b.likes).reverse().slice(0,n)
+}
+
+export const getBlogsRecentlyAdded = (state, n) => {
+  return state.blogs.blogs.reverse().slice(0,n)
+}
+

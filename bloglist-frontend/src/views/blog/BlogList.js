@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import Blog from "./Blog";
-import NewBlogForm from "./NewBlogForm";
-
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { connect } from "react-redux";
 import { initializeBlogs } from "../../actions/blogActions";
 import Box from "../common/Box";
-import { makeStyles } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
+import { makeStyles, Fab } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import BlogCard from "./BlogCard";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,15 +25,21 @@ const useStyles = makeStyles(theme => ({
   spinner: {
     flex: 1,
     alignSelf: "center"
+  },
+  floatButton: {
+    position:"fixed",
+	width:"60px",
+	height:"60px",
+	bottom:"40px",
+  right:"40px",
+  marginTop:"22px"
   }
 }));
 
 const BlogList = props => {
   const classes = useStyles();
 
-  useEffect(() => {
-    props.initializeBlogs();
-  }, []);
+  console.log(props.blogs)
 
   const blogsComponents = () => {
     const blogs = props.blogs.map(blog => (
@@ -43,7 +48,9 @@ const BlogList = props => {
     return (
       <>
         {blogs}
-        <NewBlogForm />
+      <Fab className={classes.floatButton} color="primary" aria-label="add" component={Link} to="/new">
+        <AddIcon />
+      </Fab>
       </>
     );
   };
@@ -67,7 +74,7 @@ const BlogList = props => {
   };
 
   return (
-    <Box className={classes.root}>
+    <Box width="80%" className={classes.root}>
       {props.pending ? delaySpinner() : blogsComponents()}
     </Box>
   );

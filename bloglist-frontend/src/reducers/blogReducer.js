@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     case "ADD_BLOG":
       return { ...state, blogs: [...state.blogs, action.data] };
     case "DELETE_BLOG":
-      return state.blogs.filter(element => element.id !== action.data.id);
+      return { ...state, blogs: state.blogs.filter(element => element.id !== action.data.id)};
     case "UPDATE_BLOG":
       return null;
     case "ADD_VOTE":
@@ -31,6 +31,8 @@ export default (state = initialState, action) => {
       return { pending: false, blogs: action.data, error: null };
     case "INIT_BLOGS_FAILURE":
       return { ...state, pending: false, error: action.error };
+    /*case "INIT_COMMENTS":
+      return {...state, blogs: replaceItemById(action.data, action.data.id, state.blogs) }*/
     default:
       return state;
   }

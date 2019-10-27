@@ -25,6 +25,14 @@ Blog posts:
 - [x] Delete
 - [x] Like
 - [x] Comment
+- [ ] Edit
+
+Coments:
+
+- [x] Assigned to specific user
+- [ ] Likes
+- [ ] Option to delete
+- [x] More info (timestamp)
 
 Authorization:
 
@@ -33,13 +41,17 @@ Authorization:
 - [x] Only owner of the blog post can delete it
 - [ ] Only authorized users can access API endpoints
 
+Drawer (still considering):
+
+- [ ] Basic
+
 Home page:
 
-- [ ] Site statistics
+- [x] Site statistics
 
 Users:
 
-- [ ] Profile page
+- [x] Profile page
 - [ ] Able to delete account
 - [ ] Able to add avatar
 - [ ] Able change user's name and password
@@ -48,3 +60,7 @@ Styling:
 
 - [x] Basic
 - [ ] Responsive and not terribly ugly
+
+Footer:
+
+- [x] Basic

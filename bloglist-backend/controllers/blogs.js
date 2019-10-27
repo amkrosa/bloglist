@@ -1,11 +1,12 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
+const Comment = require("../models/comment")
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 blogsRouter.get("/", async (request, response, next) => {
   try {
-    const blogs = await Blog.find({}).populate("user");
+    const blogs = await Blog.find({}).populate("user").populate({path: "comments", populate: { path: 'user'}});
     response.json(blogs.map(blog => blog.toJSON()));
   } catch (e) {
     next(e);
@@ -14,7 +15,7 @@ blogsRouter.get("/", async (request, response, next) => {
 
 blogsRouter.get("/:id", async (request, response, next) => {
   try {
-    const requestedBlog = await Blog.findById(request.params.id);
+    const requestedBlog = await Blog.findById(request.params.id).populate({path: "comments", populate: { path: 'user'}});
     requestedBlog
       ? response.json(requestedBlog.toJSON())
       : response.status(404).end();
@@ -23,7 +24,7 @@ blogsRouter.get("/:id", async (request, response, next) => {
   }
 });
 
-blogsRouter.get("/:id/comments", async (request, response, next) => {
+/*blogsRouter.get("/:id/comments", async (request, response, next) => {
   try {
     const requestedBlog = await Blog.findById(request.params.id);
     requestedBlog
@@ -32,7 +33,7 @@ blogsRouter.get("/:id/comments", async (request, response, next) => {
   } catch (e) {
     next(e);
   }
-});
+});*/
 
 blogsRouter.post("/", async (request, response, next) => {
   const token = request.token;
@@ -102,6 +103,7 @@ blogsRouter.put("/:id", async (request, response, next) => {
     await Blog.findByIdAndUpdate(request.params.id, blog, {
       new: true
     });
+    
     response.status(200).end();
   } catch (e) {
     next(e);
@@ -112,15 +114,26 @@ blogsRouter.post("/:id/comments", async (request, response, next) => {
   try {
     const body = request.body;
     const blogBeforeUpdate = await Blog.findById(request.params.id);
+    const user = await User.findOne({username: body.user})
+    const comment = new Comment({
+      content: body.content,
+      likes: body.likes || 0,
+      date: new Date(Date.now()),
+      user: user._id,
+      blog: blogBeforeUpdate._id
+    })
     const blog = {
       ...blogBeforeUpdate.toObject(),
-      comments: blogBeforeUpdate.comments.concat(body.comment)
+      comments: blogBeforeUpdate.comments.concat(comment)
     };
-    console.log(blog);
     await Blog.findByIdAndUpdate(request.params.id, blog, {
       new: true
     });
-    response.status(200).end();
+    
+    const savedComment = await comment.save();
+    user.comments = user.comments.concat(savedComment._id);
+    await user.save();
+    response.status(201).json(savedComment.toJSON());
   } catch (e) {
     next(e);
   }

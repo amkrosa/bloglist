@@ -13,6 +13,8 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./views/home/Home";
 import Blog from "./views/blog/Blog";
 import Profile from "./views/profile/Profile";
+import NewBlogForm from "./views/blog/NewBlogForm";
+import BottomNavigation from "@material-ui/core/BottomNavigation"
 
 const Main = props => {
   return (
@@ -44,6 +46,9 @@ const Main = props => {
       <ProtectedRoute exact path='/profile'>
         <Profile />
       </ProtectedRoute>
+      <ProtectedRoute exact path='/new' render={() => (
+          <NewBlogForm grow/>
+        )}/>
     </Switch>
   );
 };

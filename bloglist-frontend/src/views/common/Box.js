@@ -2,15 +2,14 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
-  box: {
-    width: "60%",
-    margin: "0 auto",
-    paddingTop: "5.8572em"
-  }
-}));
-
 const Box = props => {
+  const useStyles = makeStyles(theme => ({
+    box: {
+      width: props.width,
+      margin: "0 auto",
+      paddingTop: "5.8572em"
+    }
+  }));
   const classes = useStyles();
 
   return (

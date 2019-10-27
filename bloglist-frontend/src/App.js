@@ -12,6 +12,8 @@ import Popup from "./views/common/Popup";
 import Main from "./Main";
 
 const App = props => {
+
+
   useEffect(() => {
     props.initializeBlogs();
     props.initializeUsers();
@@ -27,10 +29,10 @@ const App = props => {
 
   return (
     <>
-      <Popup />
       <Router>
+        <Popup />
         <Navbar />
-        <Main />
+        <Main/>
       </Router>
     </>
   );

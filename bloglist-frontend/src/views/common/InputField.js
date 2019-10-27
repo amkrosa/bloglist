@@ -6,23 +6,27 @@ import {
   FormControl,
   Icon,
   Grid,
+  TextField,
 } from '@material-ui/core';
 
-const InputField = ({ password, icon, label, value, onChange }) => {
+const InputField = ({ password, icon, label, value, onChange, ...rest }) => {
   return (
     <Grid item>
       <FormControl>
-        <InputLabel htmlFor="input-with-icon-adornment">{label}</InputLabel>
-        <Input
+        <TextField
+          label={label}
           id="input-with-icon-adornment"
           type={password ? 'password' : 'text'}
-          startAdornment={
+          value={value}
+          onChange={onChange}
+          InputProps={{
+          startAdornment: (
             <InputAdornment position="start">
               <Icon>{icon}</Icon>
             </InputAdornment>
-          }
-          value={value}
-          onChange={onChange}
+          ),
+        }}
+          {...rest}
         />
       </FormControl>
     </Grid>
