@@ -1,4 +1,5 @@
 import axios from "axios";
+import Api from "./api"
 const baseUrl = "/api/blogs";
 
 let token = null;
@@ -7,43 +8,23 @@ const setToken = newToken => {
   token = `bearer ${newToken}`;
 };
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then(response => response.data);
+const config = {
+  headers: { Authorization: token }
 };
+console.log(config)
 
-const create = async newObject => {
-  const config = {
-    headers: { Authorization: token }
-  };
-  const response = await axios.post(baseUrl, newObject, config);
-  return response.data;
-};
-
-const comment = async (id, object) => {
-  const config = {
-    headers: { Authorization: token }
-  };
+const blogsApi = new Api(baseUrl)
+Api.prototype.comment = async (object, id) => {
   const response = await axios.post(`${baseUrl}/${id}/comments`, object, config);
   return response.data
 }
+console.log(blogsApi)
 
-const getComments = async (id) => {
-  const response = await axios.get(`${baseUrl}/${id}/comments`);
-  return response.data;
-}
+const getAll = async () => await blogsApi.get()
+const get = async (id) => await blogsApi.get(id)
+const create = async (object) => await blogsApi.create(object, config)
+const comment = async (object, id) => await blogsApi.comment(object, id)
+const update = async (object, id) => await blogsApi.update(object,id)
+const remove = async (id) => await blogsApi.remove(id)
 
-const update = async (id, updatedObject) => {
-  const response = await axios.put(`${baseUrl}/${id}`, updatedObject);
-  return response.data;
-};
-
-const remove = async id => {
-  const config = {
-    headers: { Authorization: token }
-  };
-  const response = await axios.delete(`${baseUrl}/${id}`, config);
-  return response.data;
-};
-
-export default { getAll, setToken, create, update, remove, comment, getComments };
+export default { getAll, get, setToken, create, update, remove, comment };

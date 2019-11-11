@@ -49,6 +49,10 @@ Home page:
 
 - [x] Site statistics
 
+Register:
+
+- [ ] Basic
+
 Users:
 
 - [x] Profile page
@@ -63,4 +67,4 @@ Styling:
 
 Footer:
 
-- [x] Basic
+- [ ] Basic

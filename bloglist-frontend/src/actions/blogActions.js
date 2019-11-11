@@ -1,12 +1,13 @@
 import blogService from "../services/blogs";
 
-export const addBlog = content => {
+export const addBlog = (content, history) => {
   return async dispatch => {
     const blog = await blogService.create(content);
-    dispatch({
+    await dispatch({
       type: "ADD_BLOG",
       data: blog
     });
+    history.push(`/blogs/${blog.id}`)
   };
 };
 

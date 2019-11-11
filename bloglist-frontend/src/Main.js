@@ -15,6 +15,7 @@ import Blog from "./views/blog/Blog";
 import Profile from "./views/profile/Profile";
 import NewBlogForm from "./views/blog/NewBlogForm";
 import BottomNavigation from "@material-ui/core/BottomNavigation"
+import Register from "./views/register/Register";
 
 const Main = props => {
   return (
@@ -27,6 +28,9 @@ const Main = props => {
       </Route>
       <Route exact path='/users'>
         <Users />
+      </Route>
+      <Route exact path='/register'>
+        <Register/>
       </Route>
       <ProtectedRoute
         exact

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { addBlog } from "../../actions/blogActions";
+import { addBlog, initializeBlogs } from "../../actions/blogActions";
 import { setNotification } from "../../actions/notificationActions";
 import { withRouter } from "react-router-dom"
 
@@ -31,7 +31,7 @@ const NewBlogForm = props => {
   const [content, setContent] = useState("");
   const [url, setUrl] = useState("");
 
-  const submit = e => {
+  const submit = async e => {
     e.preventDefault();
     const newBlog = {
       title,
@@ -41,9 +41,8 @@ const NewBlogForm = props => {
       user: props.user.username
     };
     try {
-      props.addBlog(newBlog);
+      props.addBlog(newBlog, props.history)
       props.setNotification("Blog succesfully added", "success");
-      setTimeout(()=>props.history.push(`/blogs/${props.addedBlog.id}`), 2000)
     } catch (e) {
       console.error(e);
       props.setNotification("An error has occured", "error");
@@ -98,13 +97,15 @@ const NewBlogForm = props => {
 const mapStateToProps = state => {
   return {
     user: state.auth,
-    addedBlog: state.blogs.blogs[state.blogs.blogs.length-1]
+    blogs: state.blogs.blogs,
+    status: state.blogs.pending
   };
 };
 
 const mapDispatchToProps = {
   addBlog,
-  setNotification
+  setNotification,
+  initializeBlogs
 };
 
 export default withRouter(connect(

@@ -10,6 +10,26 @@ export const initializeUsers = () => {
   };
 };
 
+export const registerUser = () => {
+  return async dispatch => {
+    const registeredUser = null
+    dispatch({
+      type: "REGISTER_USER",
+      data: registerUser
+    })
+  }
+}
+
+export const deleteUser = () => {
+  return async dispatch => {
+    const deletedUser = null
+    dispatch({
+      type: "DELETE_USER",
+      data: deletedUser
+    })
+  }
+}
+
 //selectors
 export const getUserById = (state, id) =>
   state.filter(user => user.id === id)[0];
