@@ -11,14 +11,12 @@ const setToken = newToken => {
 const config = {
   headers: { Authorization: token }
 };
-console.log(config)
 
 const blogsApi = new Api(baseUrl)
 Api.prototype.comment = async (object, id) => {
   const response = await axios.post(`${baseUrl}/${id}/comments`, object, config);
   return response.data
 }
-console.log(blogsApi)
 
 const getAll = async () => await blogsApi.get()
 const get = async (id) => await blogsApi.get(id)

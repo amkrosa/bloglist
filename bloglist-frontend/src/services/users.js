@@ -1,13 +1,9 @@
-import axios from "axios";
-const baseUrl = "/api/users";
+import Api from './api';
+const baseUrl = '/api/users';
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then(response => response.data);
-};
+const usersApi = new Api(baseUrl);
 
-const create = async (object) => {
-  const response = await axios.post(baseUrl, object)
-}
+const getAll = async () => await usersApi.get();
+const create = async object => await usersApi.create(object);
 
-export default { getAll };
+export default { getAll, create };

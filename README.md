@@ -47,7 +47,7 @@ Drawer (still considering):
 
 Home page:
 
-- [x] Site statistics
+- [x] Site statistics (currently most liked and recently added)
 
 Register:
 

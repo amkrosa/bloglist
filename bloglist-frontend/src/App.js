@@ -1,26 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { connect } from "react-redux";
-import { setUser } from "./actions/authActions";
-import { initializeUsers } from "./actions/userActions";
-import { initializeBlogs } from "./actions/blogActions";
+import { connect } from 'react-redux';
+import { setUser } from './store/auth/authActions';
+import { initializeUsers } from './store/user/userActions';
+import { initializeBlogs } from './store/blog/blogActions';
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Navbar from "./views/navbar/Navbar";
-import Popup from "./views/common/Popup";
-import Main from "./Main";
+import Navbar from './components/navbar/Navbar';
+import Popup from './components/common/Popup';
+import Main from './Main';
 
 const App = props => {
-
-
   useEffect(() => {
     props.initializeBlogs();
     props.initializeUsers();
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedUser");
+    const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if (loggedUserJSON) {
       const currentUser = JSON.parse(loggedUserJSON);
       props.setUser(currentUser);
@@ -32,7 +30,7 @@ const App = props => {
       <Router>
         <Popup />
         <Navbar />
-        <Main/>
+        <Main />
       </Router>
     </>
   );
@@ -41,10 +39,7 @@ const App = props => {
 const mapDispatchToProps = {
   setUser,
   initializeBlogs,
-  initializeUsers
+  initializeUsers,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(App);
+export default connect(null, mapDispatchToProps)(App);
