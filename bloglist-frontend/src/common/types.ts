@@ -1,26 +1,27 @@
 export interface User {
-  username: String;
-  name: String;
+  id?: string;
+  username: string;
+  name: string;
   blogs: Blog[];
   comments: Comment[];
 }
 
 export interface Comment {
-  id: String;
-  content: String;
+  id?: string;
+  content: string;
   likes: number;
-  date: Date;
-  user: User;
-  blog: Blog;
+  date?: Date;
+  user?: User;
+  blog?: Blog;
 }
 
 export interface Blog {
-  id: String;
-  author: String;
-  url: String;
-  content: String;
-  likes: number;
-  date: Date;
-  user: User;
-  comments: Comment[];
+  id?: string;
+  author: string;
+  url: string;
+  content: string;
+  likes: number | 0;
+  date?: Date;
+  user?: User;
+  comments?: Comment[];
 }
