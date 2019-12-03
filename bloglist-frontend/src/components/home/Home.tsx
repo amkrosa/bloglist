@@ -1,26 +1,21 @@
-import React from 'react';
+import React from "react";
 import {
   Typography,
   Grid,
   Divider,
   makeStyles,
-  CircularProgress,
-} from '@material-ui/core';
-import Box from '../common/Box';
-import { connect } from 'react-redux';
-import {
-  getBlogsMostPopular,
-  getBlogsRecentlyAdded,
-} from '../../store/blog/blogActions';
-import BlogCard from '../blog/BlogCard';
+  CircularProgress
+} from "@material-ui/core";
+import Box from "../common/Box";
+import BlogCard from "../blog/BlogCard";
 
 const useStyles = makeStyles(theme => ({
   headers: {
-    margin: '0.857rem',
-  },
+    margin: "0.857rem"
+  }
 }));
 
-const Home = props => {
+const Home: React.FC = (props: any) => {
   const classes = useStyles();
 
   const Row = ({ blogs }) => {
@@ -41,11 +36,10 @@ const Home = props => {
         <Grid
           container
           spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-          style={{ minHeight: '50vh' }}
-        >
+          direction='column'
+          alignItems='center'
+          justify='center'
+          style={{ minHeight: "50vh" }}>
           <CircularProgress />
         </Grid>
       </Box>
@@ -53,19 +47,19 @@ const Home = props => {
   };
 
   return (
-    <Box width="90%">
+    <Box width='90%'>
       {props.pending ? (
         delaySpinner()
       ) : (
-        <Grid container direction="row" justify="center">
-          <Typography className={classes.headers} variant="h4">
+        <Grid container direction='row' justify='center'>
+          <Typography className={classes.headers} variant='h4'>
             Most popular
           </Typography>
           <Grid container item xs={12} spacing={3}>
             <Row blogs={props.blogsMostPopular} />
           </Grid>
           <Divider />
-          <Typography className={classes.headers} variant="h4">
+          <Typography className={classes.headers} variant='h4'>
             Recently added
           </Typography>
           <Grid container item xs={12} spacing={3}>
@@ -77,12 +71,4 @@ const Home = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    blogsMostPopular: getBlogsMostPopular(state, 3),
-    blogsRecentlyAdded: getBlogsRecentlyAdded(state, 3),
-    pending: state.blogs.pending,
-  };
-};
-
-export default connect(mapStateToProps)(Home);
+export default Home;

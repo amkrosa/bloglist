@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1)
   }
 }));
-const Settings = props => {
+const Settings: React.FC = props => {
   const classes = useStyles();
 
   return (

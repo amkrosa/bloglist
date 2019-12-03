@@ -41,7 +41,7 @@ export const addVote = (
       ...blog,
       likes: blog.likes + 1
     };
-    const lul = await blogService.update(blog?.id?, newObject?);
+    await blogService.update(blog?.id?, newObject?);
     dispatch({
       type: "ADD_VOTE",
       data: newObject

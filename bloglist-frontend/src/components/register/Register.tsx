@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import InputField from '../common/InputField';
-import Form from '../common/Form';
-import { Paper, Grid, makeStyles, Button } from '@material-ui/core';
-import Box from '../common/Box';
-import { registerUser } from '../../store/user/userActions';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import InputField from "../common/InputField";
+import Form from "../common/Form";
+import { Paper, Grid, makeStyles, Button } from "@material-ui/core";
+import Box from "../common/Box";
+import { registerUser } from "../../store/user/userActions";
 
 const useStyles = makeStyles(theme => ({
   item: {
-    margin: theme.spacing(2, 3),
+    margin: theme.spacing(2, 3)
   },
   paper: {
-    width: '100%',
-    margin: '0 auto',
-    padding: theme.spacing(4, 3),
-  },
+    width: "100%",
+    margin: "0 auto",
+    padding: theme.spacing(4, 3)
+  }
 }));
 
-const Register = () => {
-  const [login, setLogin] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confPassword, setConfPassowrd] = useState('');
+const Register: React.FC = () => {
+  const [login, setLogin] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confPassword, setConfPassowrd] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -30,38 +30,38 @@ const Register = () => {
     const newUser = {
       username: login,
       name,
-      password,
+      password
     };
     dispatch(registerUser(newUser));
-    setLogin('');
-    setName('');
-    setPassword('');
-    setConfPassowrd('');
+    setLogin("");
+    setName("");
+    setPassword("");
+    setConfPassowrd("");
   };
 
   return (
-    <Box width="50%">
-      <Grid container alignItems="center">
+    <Box width='50%'>
+      <Grid container alignItems='center'>
         <Paper className={classes.paper}>
           <Form onSubmit={handleSubmit}>
             <InputField
-              label="Login"
+              label='Login'
               value={login}
               onChange={({ target }) => setLogin(target.value)}
             />
             <InputField
-              label="Name"
+              label='Name'
               value={name}
               onChange={({ target }) => setName(target.value)}
             />
             <InputField
-              label="Password"
+              label='Password'
               password
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
             <InputField
-              label="Confirm password"
+              label='Confirm password'
               error={password === confPassword ? false : true}
               password
               value={confPassword}
@@ -69,10 +69,9 @@ const Register = () => {
             />
             <Button
               className={classes.item}
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
+              variant='contained'
+              color='primary'
+              type='submit'>
               submit
             </Button>
           </Form>
