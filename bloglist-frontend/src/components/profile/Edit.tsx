@@ -1,3 +1,4 @@
+export const s = 1;
 /*import React, { useState } from 'react';
 import InputField from '../common/InputField';
 import Form from '../common/Form';
