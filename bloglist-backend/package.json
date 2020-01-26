@@ -4,8 +4,7 @@
   "description": "blog list application, that allows users to save information about interesting blogs they have stumbled across on the internet. For each listed blog we will save the author, title, url, and amount of upvotes from users of the application.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev:start": "cross-env NODE_ENV=production node index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
     "dev:watch": "cross-env NODE_ENV=development nodemon index.js",
     "dev:test": "cross-env NODE_ENV=development jest --verbose --runInBand",
     "build:ui": "rm -rf build && cd ../bloglist-frontend && npm run build --prod && cp -r build ../bloglist-backend/build"
