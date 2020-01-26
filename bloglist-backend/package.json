@@ -10,7 +10,7 @@
     "dev:test": "cross-env NODE_ENV=development jest --verbose --runInBand",
     "build:ui": "rm -rf build && cd ../bloglist-frontend && npm run build --prod && cp -r build ../bloglist-backend/build",
     "heroku:setenv": "sed 's/#[^(\"|'')]*$//;s/^#.*$//' .env | xargs heroku config:set --app=amkrosa",
-    "heroku:deploy": "git subtree push --prefix bloglist-backend heroku master"
+    "heroku:deploy": "cd .. && git add bloglist-backend && git commit --allow-empty -m \"deploy\" && git subtree push --prefix bloglist-backend heroku master"
   },
   "author": "amkrosa",
   "license": "ISC",
