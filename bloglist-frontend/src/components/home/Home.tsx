@@ -1,73 +1,60 @@
-import React from "react";
+import React from 'react';
+import Box from '../common/Box';
+import BlogCard from '../blog/Blog/BlogCard';
 import {
-  Typography,
+  Loader,
+  Container,
   Grid,
+  Header,
   Divider,
-  makeStyles,
-  CircularProgress
-} from "@material-ui/core";
-import Box from "../common/Box";
-import BlogCard from "../blog/BlogCard";
-
-const useStyles = makeStyles(theme => ({
-  headers: {
-    margin: "0.857rem"
-  }
-}));
+  Segment,
+  Rail,
+} from 'semantic-ui-react';
+import FeedHome from '../feed';
 
 const Home: React.FC = (props: any) => {
-  const classes = useStyles();
-
-  const Row = ({ blogs }) => {
+  console.log(props.blogsMostPopular);
+  const Row = ({ blogs }: any) => {
     return (
       <>
-        {blogs.map(blog => (
-          <Grid key={blog.id} item>
+        {blogs.map((blog: any) => (
+          <Grid.Column key={blog.id} item>
             <BlogCard key={blog.id} blog={blog} />
-          </Grid>
+          </Grid.Column>
         ))}
       </>
     );
   };
 
-  const delaySpinner = () => {
-    return (
-      <Box className={classes.spinnerWrapper}>
-        <Grid
-          container
-          spacing={0}
-          direction='column'
-          alignItems='center'
-          justify='center'
-          style={{ minHeight: "50vh" }}>
-          <CircularProgress />
-        </Grid>
-      </Box>
-    );
-  };
-
   return (
-    <Box width='90%'>
+    <Container>
       {props.pending ? (
-        delaySpinner()
+        <Loader />
       ) : (
-        <Grid container direction='row' justify='center'>
-          <Typography className={classes.headers} variant='h4'>
-            Most popular
-          </Typography>
-          <Grid container item xs={12} spacing={3}>
-            <Row blogs={props.blogsMostPopular} />
+        <>
+          <Grid
+            container
+            divided
+            padded
+            columns="equal"
+            direction="column"
+            justify="center"
+          >
+            <Header as="h4">Most popular</Header>
+            <Grid.Row>
+              <Row blogs={props.blogsMostPopular} />
+            </Grid.Row>
+            <Header as="h4">Recently added</Header>
+            <Grid.Row>
+              <Row blogs={props.blogsRecentlyAdded} />
+            </Grid.Row>
+            <Grid.Column>
+              <FeedHome />
+            </Grid.Column>
           </Grid>
-          <Divider />
-          <Typography className={classes.headers} variant='h4'>
-            Recently added
-          </Typography>
-          <Grid container item xs={12} spacing={3}>
-            <Row blogs={props.blogsRecentlyAdded} />
-          </Grid>
-        </Grid>
+        </>
       )}
-    </Box>
+    </Container>
   );
 };
 

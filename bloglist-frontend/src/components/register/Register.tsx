@@ -1,77 +1,79 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import InputField from "../common/InputField";
-import Form from "../common/Form";
-import { Paper, Grid, makeStyles, Button } from "@material-ui/core";
-import Box from "../common/Box";
-import { registerUser } from "../../store/user/userActions";
+export const nothing = null;
+/*import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import InputField from '../common/InputField';
+import Form from '../common/Form';
+import { Paper, Grid, makeStyles, Button } from '@material-ui/core';
+import Box from '../common/Box';
+import { registerUser } from '../../store/user/userActions';
 
 const useStyles = makeStyles(theme => ({
   item: {
-    margin: theme.spacing(2, 3)
+    margin: theme.spacing(2, 3),
   },
   paper: {
-    width: "100%",
-    margin: "0 auto",
-    padding: theme.spacing(4, 3)
-  }
+    width: '100%',
+    margin: '0 auto',
+    padding: theme.spacing(4, 3),
+  },
 }));
 
 const Register: React.FC = () => {
-  const [login, setLogin] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confPassword, setConfPassowrd] = useState("");
+  const [login, setLogin] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confPassword, setConfPassowrd] = useState('');
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     const newUser = {
       username: login,
       name,
-      password
+      password,
     };
     dispatch(registerUser(newUser));
-    setLogin("");
-    setName("");
-    setPassword("");
-    setConfPassowrd("");
+    setLogin('');
+    setName('');
+    setPassword('');
+    setConfPassowrd('');
   };
 
   return (
-    <Box width='50%'>
-      <Grid container alignItems='center'>
+    <Box width="50%">
+      <Grid container alignItems="center">
         <Paper className={classes.paper}>
           <Form onSubmit={handleSubmit}>
             <InputField
-              label='Login'
+              label="Login"
               value={login}
-              onChange={({ target }) => setLogin(target.value)}
+              onChange={({ target }: any) => setLogin(target.value)}
             />
             <InputField
-              label='Name'
+              label="Name"
               value={name}
-              onChange={({ target }) => setName(target.value)}
+              onChange={({ target }: any) => setName(target.value)}
             />
             <InputField
-              label='Password'
+              label="Password"
               password
               value={password}
-              onChange={({ target }) => setPassword(target.value)}
+              onChange={({ target }: any) => setPassword(target.value)}
             />
             <InputField
-              label='Confirm password'
+              label="Confirm password"
               error={password === confPassword ? false : true}
               password
               value={confPassword}
-              onChange={({ target }) => setConfPassowrd(target.value)}
+              onChange={({ target }: any) => setConfPassowrd(target.value)}
             />
             <Button
               className={classes.item}
-              variant='contained'
-              color='primary'
-              type='submit'>
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
               submit
             </Button>
           </Form>
@@ -81,4 +83,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default Register;*/

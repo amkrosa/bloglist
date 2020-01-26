@@ -1,0 +1,23 @@
+.userHeaderWrapper {
+  flex: 1;
+  margin-top: 120;
+  justify-content: center;
+  align-items: center;
+  direction: row;
+}
+.avatar {
+  margin: 4rem;
+  width: 120;
+  height: 120;
+}
+.userDetails {
+  width: 28rem;
+}
+.userDetailsBody {
+  margin-top: 2rem;
+}
+.tabsWrapper {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}

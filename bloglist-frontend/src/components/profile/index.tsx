@@ -1,10 +1,10 @@
-import { connect } from "react-redux";
-import { getCurrentUser } from "../../store/user/userActions";
-import Profile from "./Profile";
+import { connect } from 'react-redux';
+import { getCurrentUser } from '../../store/user/userActions';
+import Profile from './Profile';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
-    user: getCurrentUser(state)
+    user: getCurrentUser(state),
   };
 };
 

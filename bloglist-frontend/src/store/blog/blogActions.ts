@@ -1,32 +1,37 @@
-import blogService from "../../services/blogs";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
-import { History } from "history";
-import { BlogState } from "./types";
-import { Blog } from "../../common/types";
+import blogService from '../../services/blogs';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { History } from 'history';
+import {
+  BlogState,
+  INIT_BLOGS_PENDING,
+  INIT_BLOGS_SUCCESS,
+  INIT_BLOGS_FAILURE,
+} from './types';
+import { Blog } from '../../common/types';
 
 export const addBlog = (
   content: any,
-  history: History
+  history: History,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     const blog = await blogService.create(content);
     dispatch({
-      type: "ADD_BLOG",
-      data: blog
+      type: 'ADD_BLOG',
+      data: blog,
     });
     history.push(`/blogs/${blog.id}`);
   };
 };
 
 export const deleteBlog = (
-  id: String
+  id: string,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     await blogService.remove(id);
     dispatch({
-      type: "DELETE_BLOG",
-      data: { id }
+      type: 'DELETE_BLOG',
+      data: { id },
     });
   };
 };
@@ -34,55 +39,61 @@ export const deleteBlog = (
 export const updateBlog = (id: String) => {};
 
 export const addVote = (
-  blog: Blog
+  blog: Blog,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     const newObject = {
       ...blog,
-      likes: blog.likes + 1
+      likes: blog.likes + 1,
     };
-    await blogService.update(blog?.id?, newObject?);
+    await blogService.update(newObject, blog.id ? blog.id : '');
     dispatch({
-      type: "ADD_VOTE",
-      data: newObject
+      type: 'ADD_VOTE',
+      data: newObject,
     });
   };
 };
 
 export const addComment = (
   blog: Blog,
-  comment: string
+  comment: string,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
-    const newComment = await blogService.comment(blog?.id?, comment);
+    const newComment = await blogService.comment(
+      comment,
+      blog.id ? blog.id : '',
+    );
     const newBlog = { ...blog, comments: blog?.comments?.concat(newComment) };
     dispatch({
-      type: "ADD_COMMENT",
-      data: newBlog
+      type: 'ADD_COMMENT',
+      data: newBlog,
     });
   };
 };
 
-export const initializeBlogs = (): ThunkAction<
+/*ThunkAction<
   Promise<void>,
   {},
   {},
   AnyAction
-> => {
-  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+>*/
+
+export const initializeBlogs = (): any => {
+  return async (dispatch: any): Promise<any> => {
     dispatch({
-      type: "INIT_BLOGS_PENDING"
+      type: INIT_BLOGS_PENDING,
     });
     try {
+      console.log('initializeBlogs');
       const blogs = await blogService.getAll();
       dispatch({
-        type: "INIT_BLOGS_SUCCESS",
-        data: blogs
+        type: INIT_BLOGS_SUCCESS,
+        data: blogs,
       });
     } catch (e) {
       dispatch({
-        type: "INIT_BLOGS_FAILURE",
-        error: e
+        type: INIT_BLOGS_FAILURE,
+        error: e,
       });
     }
   };

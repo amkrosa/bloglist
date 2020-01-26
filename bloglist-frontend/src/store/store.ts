@@ -8,10 +8,10 @@ import authReducer from './auth/authReducer';
 import userReducer from './user/userReducer';
 
 const reducer = combineReducers({
-  blogs: blogReducer,
-  notification: notificationReducer,
-  auth: authReducer,
-  users: userReducer,
+  blogs: blogReducer as any,
+  notification: notificationReducer as any,
+  auth: authReducer as any,
+  users: userReducer as any,
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

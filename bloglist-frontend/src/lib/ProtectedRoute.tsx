@@ -1,15 +1,34 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Route, Redirect, withRouter } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import {
+  Route,
+  Redirect,
+  withRouter,
+  RouteProps,
+  RouteComponentProps,
+} from 'react-router-dom';
+import { AuthState } from '../store/auth/types';
 
-const ProtectedRoute: React.FC = ({ auth, children, ...rest }) => {
-  return auth ? <Route {...rest}>{children}</Route> : <Redirect to='/' />;
+interface ProtectedRouteProps {
+  auth: AuthState;
+}
+
+const ProtectedRoute = ({
+  auth,
+  children,
+  ...rest
+}: RouteProps & ProtectedRouteProps): JSX.Element => {
+  return auth ? <Route {...rest}>{children}</Route> : <Redirect to="/" />;
 };
 
 const mapStateToProps = (state: any) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
-export default withRouter(connect(mapStateToProps)(ProtectedRoute));
+//deleted withRouter before
+
+export default connect<{}, {}, ProtectedRouteProps>(mapStateToProps)(
+  ProtectedRoute,
+) as any;
