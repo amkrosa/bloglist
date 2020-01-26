@@ -33,11 +33,16 @@ app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 
-app.use(express.static('build'));
+/*app.use(express.static('build'));
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});*/
+
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
+app.get('*', (req, res) => {
+  res.sendFile('index.html', { root: path.join(__dirname, 'build/') });
 });
 
 app.use(middleware.unknownEndpoint);
