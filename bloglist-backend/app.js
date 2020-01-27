@@ -6,9 +6,9 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const blogsRouter = require('./controllers/blogs');
-const usersRouter = require('./controllers/users');
-const loginRouter = require('./controllers/login');
+const blogsRouter = require('./controllers/bloglist/blogs');
+const usersRouter = require('./controllers/bloglist/users');
+const loginRouter = require('./controllers/bloglist/login');
 
 const middleware = require('./utils/middleware');
 
@@ -29,20 +29,28 @@ app.use(bodyParser.json());
 app.use(middleware.tokenExtractor);
 
 //blog-list api
-app.use('/api/blogs', blogsRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/login', loginRouter);
+app.use('/bloglist/api/blogs', blogsRouter);
+app.use('/bloglist/api/users', usersRouter);
+app.use('/bloglist/api/login', loginRouter);
 
-/*app.use(express.static('build'));
+app.use(
+  '/static',
+  express.static(path.join(__dirname, 'client//bloglist-build/static')),
+);
+app.get('/bloglist*', (req, res) => {
+  res.sendFile('index.html', {
+    root: path.join(__dirname, 'client//bloglist-build/'),
+  });
+});
 
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});*/
-
-app.use('/static', express.static(path.join(__dirname, 'build//static')));
-app.get('*', (req, res) => {
-  res.sendFile('index.html', { root: path.join(__dirname, 'build/') });
+app.use(
+  '/static',
+  express.static(path.join(__dirname, 'client//personalsite-build/static')),
+);
+app.get('/', (req, res) => {
+  res.sendFile('index.html', {
+    root: path.join(__dirname, 'client//personalsite-build/'),
+  });
 });
 
 app.use(middleware.unknownEndpoint);

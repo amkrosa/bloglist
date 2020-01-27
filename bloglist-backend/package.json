@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "prod:start": "cross-env NODE_ENV=production node index.js",
-    "dev:watch": "cross-env NODE_ENV=development nodemon index.js",
+    "dev:watch": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development nodemon index.js",
     "dev:test": "cross-env NODE_ENV=development jest --verbose --runInBand",
     "build:bloglist": "rm -rf client/bloglist-build && cd ../bloglist-frontend && npm run build --prod && cp -r build ../bloglist-backend/client/bloglist-build",
     "build:personal": "rm -rf client/personalsite-build && cd ../../personal-site && npm run build --prod && cp -r build ../bloglist/bloglist-backend/client/personalsite-build",
