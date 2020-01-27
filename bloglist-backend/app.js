@@ -37,7 +37,7 @@ app.use(
   '/static',
   express.static(path.join(__dirname, 'client//bloglist-build/static')),
 );
-app.get('/bloglist*', (req, res) => {
+app.get('/bloglist/*', (req, res) => {
   res.sendFile('index.html', {
     root: path.join(__dirname, 'client//bloglist-build/'),
   });
