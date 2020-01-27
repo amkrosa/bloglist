@@ -33,37 +33,23 @@ app.use('/bloglist/api/blogs', blogsRouter);
 app.use('/bloglist/api/users', usersRouter);
 app.use('/bloglist/api/login', loginRouter);
 
-//app.use(express.static(path.join(__dirname, 'client//bloglist-build/static')));
-app.use(express.static('client/bloglist-build'));
-app.use(express.static(path.join(__dirname, 'client/bloglist-build')));
-
-app.use(express.static('client/personalsite-build'));
+//bloglist static files
+app.use(
+  '/bloglist',
+  express.static(path.join(__dirname, 'client/bloglist-build')),
+);
+//personal site static files
 app.use(express.static(path.join(__dirname, 'client/personalsite-build')));
-
-/*app.use(
-  '/static',
-  express.static(path.join(__dirname, 'client//personalsite-build/static')),
-);*/
-
-/*app.get('/bloglist', (req, res) => {
-  res.sendFile('index.html', {
-    root: path.join(__dirname, 'client//bloglist-build/'),
-  });
-});*/
 
 app.get('/bloglist*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client/bloglist-build', 'index.html'));
 });
+
 app.get('/', (req, res) => {
   res.sendFile(
     path.resolve(__dirname, 'client/personalsite-build', 'index.html'),
   );
 });
-/*app.get('/', (req, res) => {
-  res.sendFile('index.html', {
-    root: path.join(__dirname, 'client//personalsite-build/'),
-  });
-});*/
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
