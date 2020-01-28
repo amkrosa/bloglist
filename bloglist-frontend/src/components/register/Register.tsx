@@ -1,5 +1,6 @@
-export const nothing = null;
-/*import React, { useState } from 'react';
+export const l = 1;
+/*
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import InputField from '../common/InputField';
 import Form from '../common/Form';

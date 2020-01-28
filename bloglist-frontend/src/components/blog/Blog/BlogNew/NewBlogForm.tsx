@@ -18,19 +18,19 @@ const NewBlogForm = ({
           fluid
           label="Title"
           value={title}
-          onSubmit={({ target }: any) => setTitle(target.value)}
+          onChange={({ target }: any) => setTitle(target.value)}
         />
         <Form.TextArea
           label="Content"
           value={content}
-          onSubmit={({ target }: any) => setContent(target.value)}
+          onChange={({ target }: any) => setContent(target.value)}
           placeholder="Blog content..."
         />
         <Form.Input
           fluid
           label="URL"
           value={url}
-          onSubmit={({ target }: any) => setUrl(target.value)}
+          onChange={({ target }: any) => setUrl(target.value)}
         />
         <Form.Button>Submit</Form.Button>
       </Form.Group>

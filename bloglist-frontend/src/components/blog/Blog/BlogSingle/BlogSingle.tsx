@@ -8,6 +8,7 @@ import {
   Header,
   Statistic,
   Comment,
+  Segment,
 } from 'semantic-ui-react';
 import Comments from '../../Comments';
 
@@ -19,23 +20,25 @@ const BlogSingle = ({ blog, full = false, currentUser, ...props }: any) => {
   }
 
   return (
-    <Grid.Column>
-      <Container>
+    <Grid verticalAlign="middle" centered>
+      <Grid.Column className="blog single">
         {full ? (
           <>
-            <Header as="h4">
+            <Header as="h2">
               {blog.title}
               <Header.Subheader>{blog.author}</Header.Subheader>
             </Header>
-            <Container>{blog.content}</Container>
+            <Container text>{blog.content}</Container>
             <Statistic>
               <Statistic.Label>
-                <Icon
-                  onClick={() => props.addVote(blog)}
-                  name="thumbs up outline"
-                />
+                {currentUser.token ? (
+                  <Icon
+                    onClick={() => props.addVote(blog)}
+                    name="thumbs up outline"
+                  />
+                ) : null}
               </Statistic.Label>
-              <Statistic.Value>{blog.likes}</Statistic.Value>
+              <Statistic.Value as="h4">{blog.likes}</Statistic.Value>
             </Statistic>
             {currentUser.username === blog.user.username ? (
               <Icon
@@ -63,8 +66,8 @@ const BlogSingle = ({ blog, full = false, currentUser, ...props }: any) => {
             {blog.title}
           </Header>
         )}
-      </Container>
-    </Grid.Column>
+      </Grid.Column>
+    </Grid>
   );
 };
 

@@ -7,14 +7,13 @@ import { initializeBlogs } from './store/blog/blogActions';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
-//import Navbar from './components/navbar/Navbar';
+import Navbar from './components/navbar/Navbar';
 import Popup from './components/common/Popup';
 import Routes from './Routes';
+import blogService from './services/blogs';
 
 const App = (props: any) => {
-  console.log(props);
   useEffect(() => {
-    console.log('entered useffect');
     props.initializeBlogs();
     props.initializeUsers();
   }, []);
@@ -24,14 +23,14 @@ const App = (props: any) => {
     if (loggedUserJSON) {
       const currentUser = JSON.parse(loggedUserJSON);
       props.setUser(currentUser);
-    }
+    } else props.setUser({});
   }, []);
 
   return (
     <>
-      <Router>
-        {/*<Popup />*/}
-        {/*<Navbar />*/}
+      <Router basename="/bloglist">
+        <Popup />
+        <Navbar />
         <Routes />
       </Router>
     </>

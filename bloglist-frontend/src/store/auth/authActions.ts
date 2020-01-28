@@ -10,7 +10,7 @@ export const login = (
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     const user = await loginService.login({ username, password });
-    blogService.setToken(user.token);
+    blogService.api.token = user.token;
     window.localStorage.setItem('loggedUser', JSON.stringify(user));
     dispatch({
       type: 'LOGIN',
@@ -20,7 +20,8 @@ export const login = (
 };
 export const logout = (): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
-    blogService.setToken(null);
+    window.localStorage.removeItem('loggedUser');
+    blogService.api.token = null;
     dispatch({
       type: 'LOGOUT',
     });
@@ -30,7 +31,7 @@ export const setUser = (
   user: any,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
-    blogService.setToken(user.token);
+    blogService.api.token = user.token;
     dispatch({
       type: 'SET_USER',
       data: user,
@@ -41,7 +42,7 @@ export const setToken = (
   token: string,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
-    blogService.setToken(token);
+    blogService.api.token = token;
     dispatch({
       type: 'SET_TOKEN',
       data: token,

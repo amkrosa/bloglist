@@ -7,7 +7,7 @@ import './styles.scss';
 const BlogList = (props: any) => {
   const blogsComponents = () => {
     const blogs = props.blogs.map((blog: any) => (
-      <Grid.Column item>
+      <Grid.Column>
         <BlogCard key={blog.id} blog={blog} />
       </Grid.Column>
     ));

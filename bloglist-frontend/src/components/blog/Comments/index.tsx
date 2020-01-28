@@ -5,19 +5,16 @@ import CommentsNew from './CommentsNew';
 
 const Comments = ({ comments }: any) => {
   const user: any = window.localStorage.getItem('loggedUser') ?? '';
-  const parsedUser: any = JSON.parse(user);
+  let parsedUser: any;
+  if (user) parsedUser = JSON.parse(user);
   const renderComments = () =>
     comments.map((comment: any) => (
-      <Comments.Single
-        key={generateId()}
-        comment={comment}
-        user={parsedUser.name}
-      ></Comments.Single>
+      <Comments.Single key={generateId()} comment={comment}></Comments.Single>
     ));
   return (
     <>
       {renderComments()}
-      <Comments.New />
+      {parsedUser ? <Comments.New /> : null}
     </>
   );
 };

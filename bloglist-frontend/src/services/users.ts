@@ -1,5 +1,5 @@
-import Api from "./api";
-const baseUrl = "/api/users";
+import Api from './api';
+const baseUrl = '/bloglist/api/users';
 
 const usersApi = new Api(baseUrl);
 

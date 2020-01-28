@@ -1,9 +1,16 @@
-.blog-card {
-  margin: 1em;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out;
-  &:hover {
-    transform: scale(1.1);
+.blog {
+  &.card {
+    padding: 0.5em !important;
+    margin: 0.5em 0em !important;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  &.single {
+    margin-top: 2em;
+    max-width: 50vw;
   }
 }
 .media {
