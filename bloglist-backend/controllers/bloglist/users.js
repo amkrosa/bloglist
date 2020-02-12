@@ -27,7 +27,11 @@ usersRouter.post('/', async (request, response, next) => {
     const body = request.body;
     if (!body.username || !body.password) {
       return response.status(400).end();
-    } else if (body.username.length < 3 || body.password.length < 3) {
+    } else if (
+      body.username.length < 3 ||
+      body.password.length < 5 ||
+      body.name.length < 3
+    ) {
       return response.status(400).end();
     }
     const saltRounds = 10;
