@@ -7,7 +7,7 @@ import {
   Header,
   Button,
 } from 'semantic-ui-react';
-import DropdownMobile from '../DropdownMobile';
+import NavbarMobile from './NavbarMobile';
 import { AuthState } from '../../../store/auth/types';
 import './Navbar.scss';
 import { useHistory } from 'react-router-dom';
@@ -18,9 +18,11 @@ interface INavbarProps {
 }
 
 const Navbar: React.FC<INavbarProps> = props => {
+  let history = useHistory();
+
   const handleLogoutClick = () => {
     props.logout();
-    window.location.reload();
+    history.push('/');
   };
 
   return (
@@ -34,12 +36,17 @@ const Navbar: React.FC<INavbarProps> = props => {
       >
         <Menu.Item name="/" content="Home" link href="/bloglist" />
         <Menu.Item name="/blogs" content="Blogs" link href="/bloglist/blogs" />
-        <Menu.Item
-          name="/profile"
-          content="Profile"
-          link
-          href="/bloglist/profile"
-        />
+        {props.auth?.token ? (
+          <>
+            <Menu.Item
+              name="/profile"
+              content="Profile"
+              link
+              href="/bloglist/profile"
+            />
+            <Menu.Item name="/new" content="New" link href="/bloglist/new" />
+          </>
+        ) : null}
         <Menu.Menu position="right">
           {props.auth?.token ? (
             <>
@@ -70,7 +77,7 @@ const Navbar: React.FC<INavbarProps> = props => {
         </Menu.Menu>
       </Responsive>
       <Responsive maxWidth={499} as={Menu}>
-        <DropdownMobile />
+        <NavbarMobile handleLogout={handleLogoutClick} />
       </Responsive>
     </>
   );

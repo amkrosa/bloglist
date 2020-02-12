@@ -3,15 +3,12 @@
   flex-direction: 'column';
   align-items: 'center';
 }
-.spinnerWrapper {
-  flex: 1;
-  margin-top: 240;
-  justify-content: 'center';
-  align-items: 'center';
-}
+
 .spinner {
-  flex: 1;
-  align-self: 'center';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .floatButton {
   position: 'fixed';

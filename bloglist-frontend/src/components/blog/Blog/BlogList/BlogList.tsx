@@ -3,29 +3,31 @@ import BlogCard from '../BlogCard';
 import { Link } from 'react-router-dom';
 import { Container, Loader, Grid } from 'semantic-ui-react';
 import './styles.scss';
+import { generateId } from '../../../../lib/helpers';
 
 const BlogList = (props: any) => {
   const blogsComponents = () => {
-    const blogs = props.blogs.map((blog: any) => (
-      <Grid.Column>
-        <BlogCard key={blog.id} blog={blog} />
-      </Grid.Column>
-    ));
+    const blogs = props.blogs
+      .map((blog: any) => (
+        <Grid.Row key={generateId()}>
+          <BlogCard key={blog.id} blog={blog} />
+        </Grid.Row>
+      ))
+      .reverse();
     return <>{blogs}</>;
   };
 
-  const delaySpinner = () => {
-    const id = setTimeout(
-      () => (
-        <Container className="spinnerWrapper">
-          <Loader />
-        </Container>
-      ),
-      200,
-    );
-  };
-
-  return <>{props.pending ? delaySpinner() : blogsComponents()}</>;
+  return (
+    <Grid centered verticalAlign="middle" columns={1}>
+      <Grid.Column width={10}>
+        {props.pending ? (
+          <Loader className="spinner" active />
+        ) : (
+          blogsComponents()
+        )}
+      </Grid.Column>
+    </Grid>
+  );
 };
 
 export default BlogList;

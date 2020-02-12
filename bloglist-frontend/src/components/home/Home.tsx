@@ -1,24 +1,15 @@
 import React from 'react';
 import Box from '../common/Box';
 import BlogCard from '../blog/Blog/BlogCard';
-import {
-  Loader,
-  Container,
-  Grid,
-  Header,
-  Divider,
-  Segment,
-  Rail,
-} from 'semantic-ui-react';
+import { Loader, Container, Grid, Header } from 'semantic-ui-react';
 import FeedHome from '../feed';
 
 const Home: React.FC = (props: any) => {
-  console.log(props.blogsMostPopular);
   const Row = ({ blogs }: any) => {
     return (
       <>
         {blogs.map((blog: any) => (
-          <Grid.Column key={blog.id} item>
+          <Grid.Column key={blog.id}>
             <BlogCard key={blog.id} blog={blog} />
           </Grid.Column>
         ))}
@@ -48,9 +39,6 @@ const Home: React.FC = (props: any) => {
             <Grid.Row>
               <Row blogs={props.blogsRecentlyAdded} />
             </Grid.Row>
-            <Grid.Column>
-              <FeedHome />
-            </Grid.Column>
           </Grid>
         </>
       )}

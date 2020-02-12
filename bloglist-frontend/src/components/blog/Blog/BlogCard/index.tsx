@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Card } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import '../styles.scss';
 
 const BlogCard = ({ blog, history }: any) => {
@@ -12,7 +12,15 @@ const BlogCard = ({ blog, history }: any) => {
       <Card.Content>
         <Card.Header content={blog.title} />
         <Card.Meta content={blog.author} />
-        <Card.Description content={blog.content} />
+        <Card.Description content={blog.description} />
+      </Card.Content>
+      <Card.Content extra>
+        <p>
+          <Icon name="like" />
+          {blog.likes} likes
+        </p>
+        <Icon name="comments" />
+        {blog.comments.length} comments
       </Card.Content>
     </Card>
   );

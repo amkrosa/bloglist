@@ -1,7 +1,8 @@
 .blog {
   &.card {
     padding: 0.5em !important;
-    margin: 0.5em 0em !important;
+    margin: 1.1em 0em !important;
+    width: 100% !important;
     overflow: hidden;
     transition: transform 0.2s ease-in-out;
     &:hover {
@@ -12,12 +13,58 @@
     margin-top: 2em;
     max-width: 50vw;
   }
+  &.text {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+  }
 }
 .media {
   height: 0;
   padding-top: 56.25%; // 16:9
 }
+
 .text {
   text-overflow: ellipsis;
   padding: 0.5em;
+}
+
+.delete {
+  float: right;
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}
+.like {
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}
+.text-editor {
+  &.editor {
+    border: 1px solid #f1f1f1;
+    padding: 5px;
+    border-radius: 2px;
+    height: 200px;
+  }
+  &.toolbar {
+    top: -130px;
+  }
+  &.textarea {
+    margin-top: 20px;
+    resize: none;
+    width: 100%;
+    border: 1px solid #f1f1f1;
+    height: 100px;
+  }
+  &.wrapper {
+    margin: 1.4em auto;
+    width: 100% !important;
+  }
+}
+
+.input {
+  max-width: 300px;
+  margin: 0.6em auto !important;
 }

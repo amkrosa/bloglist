@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { addBlog, initializeBlogs } from '../../../../store/blog/blogActions';
 import { setNotification } from '../../../../store/notification/notificationActions';
 import { withRouter } from 'react-router-dom';
-
 const BlogNew = (props: any) => {
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [url, setUrl] = useState('');
+  const [content, setContent] = useState();
+  const [description, setDescription] = useState('');
 
   const submit = async (e: any) => {
     e.preventDefault();
@@ -16,7 +15,7 @@ const BlogNew = (props: any) => {
       title,
       author: props.user.name,
       content,
-      url,
+      description,
       user: props.user.username,
     };
     try {
@@ -34,8 +33,8 @@ const BlogNew = (props: any) => {
       setTitle={setTitle}
       content={content}
       setContent={setContent}
-      url={url}
-      setUrl={setUrl}
+      description={description}
+      setDescription={setDescription}
       submit={submit}
     />
   );

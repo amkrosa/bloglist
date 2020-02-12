@@ -1,15 +1,19 @@
 import axios, { AxiosResponse } from 'axios';
 
 class Api {
-  private baseUrl: string;
+  private _baseUrl: string;
   private _token?: string;
+  private _config?: Object;
   constructor(baseUrl: string, token?: string) {
-    this.baseUrl = baseUrl;
+    this._baseUrl = baseUrl;
     this._token = `bearer ${token}`;
   }
 
   set token(newToken: string | null) {
     this._token = `bearer ${newToken}`;
+    this._config = {
+      headers: { Authorization: this._token },
+    };
   }
   get token(): string | null {
     if (this._token !== undefined) return this._token;
@@ -18,55 +22,79 @@ class Api {
 
   async get(id?: string) {
     let response;
-    if (typeof id === 'undefined') {
-      response = await axios.get(this.baseUrl);
-    } else {
-      response = await axios.get(`${this.baseUrl}/${id}`);
+    try {
+      if (typeof id === 'undefined') {
+        response = await axios.get(this._baseUrl);
+      } else {
+        response = await axios.get(`${this._baseUrl}/${id}`);
+      }
+      return response.data;
+    } catch (e) {
+      console.error(e);
     }
-    return response.data;
   }
-  async create(object: Object, id?: string, options?: Object) {
+  async create(object: Object, id?: string, withAuth?: boolean) {
     let response;
-    if (typeof options === 'undefined') {
-      response = await axios.post(this.baseUrl, object);
-    } else {
-      response = await axios.post(this.baseUrl, object, options);
+    try {
+      if (typeof withAuth === 'undefined') {
+        response = await axios.post(this._baseUrl, object);
+      } else {
+        response = await axios.post(this._baseUrl, object, this._config);
+      }
+      return response.data;
+    } catch (e) {
+      console.error(e);
     }
-    return response.data;
   }
 
-  async update(object: Object, id?: string, options?: Object) {
+  async update(object: Object, id?: string, withAuth?: boolean) {
     let response: any;
-    if (typeof options === 'undefined') {
-      response = await axios.put(`${this.baseUrl}/${id}`, object);
-    } else {
-      await axios.put(`${this.baseUrl}/${id}`, object, options);
+    try {
+      if (typeof withAuth === 'undefined') {
+        response = await axios.put(`${this._baseUrl}/${id}`, object);
+      } else {
+        await axios.put(`${this._baseUrl}/${id}`, object, this._config);
+      }
+      return response.data;
+    } catch (e) {
+      console.error(e);
     }
-    return response.data;
   }
 
-  async remove(id: string, options?: Object) {
+  async remove(id: string, withAuth?: boolean) {
     let response;
-    if (typeof options === 'undefined') {
-      response = await axios.delete(`${this.baseUrl}/${id}`);
-    } else {
-      response = await axios.delete(`${this.baseUrl}/${id}`, options);
+    try {
+      if (typeof withAuth === 'undefined') {
+        response = await axios.delete(`${this._baseUrl}/${id}`);
+      } else {
+        response = await axios.delete(`${this._baseUrl}/${id}`, this._config);
+      }
+      return response.data;
+    } catch (e) {
+      console.error(e);
     }
-    return response.data;
   }
 
-  async comment(object: Object, id: string, options?: Object) {
-    const response = await axios.post(
-      `${this.baseUrl}/${id}/comments`,
-      object,
-      options,
-    );
-    return response.data;
+  async comment(object: string, id: string) {
+    try {
+      const response = await axios.post(
+        `${this._baseUrl}/${id}/comments`,
+        object,
+        this._config,
+      );
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async login(credentials: Object) {
-    const response = await axios.post(this.baseUrl, credentials);
-    return response.data;
+    try {
+      const response = await axios.post(this._baseUrl, credentials);
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 

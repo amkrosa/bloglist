@@ -18,6 +18,7 @@ const ProtectedRoute = ({
   children,
   ...rest
 }: RouteProps & ProtectedRouteProps): JSX.Element => {
+  console.log(auth);
   return auth ? <Route {...rest}>{children}</Route> : <Redirect to="/" />;
 };
 
@@ -26,8 +27,6 @@ const mapStateToProps = (state: any) => {
     auth: state.auth,
   };
 };
-
-//deleted withRouter before
 
 export default connect<{}, {}, ProtectedRouteProps>(mapStateToProps)(
   ProtectedRoute,

@@ -7,6 +7,7 @@ import {
   INIT_BLOGS_PENDING,
   INIT_BLOGS_SUCCESS,
   INIT_BLOGS_FAILURE,
+  ADD_COMMENT,
 } from './types';
 import { Blog } from '../../common/types';
 
@@ -20,7 +21,7 @@ export const addBlog = (
       type: 'ADD_BLOG',
       data: blog,
     });
-    history.push(`/blogs/${blog.id}`);
+    history.push(`/blogs/${blog.id}`, blog.id);
   };
 };
 
@@ -65,7 +66,7 @@ export const addComment = (
     );
     const newBlog = { ...blog, comments: blog?.comments?.concat(newComment) };
     dispatch({
-      type: 'ADD_COMMENT',
+      type: ADD_COMMENT,
       data: newBlog,
     });
   };
@@ -84,7 +85,6 @@ export const initializeBlogs = (): any => {
       type: INIT_BLOGS_PENDING,
     });
     try {
-      console.log('initializeBlogs');
       const blogs = await blogService.getAll();
       dispatch({
         type: INIT_BLOGS_SUCCESS,
@@ -105,12 +105,14 @@ export const getBlogById = (state: any, id: string) =>
   state.blogs.filter((blog: Blog) => blog.id === id)[0];
 
 export const getBlogsMostPopular = (state: any, n: number) => {
-  return state.blogs.blogs
+  const returnArray = [...state.blogs.blogs];
+  return returnArray
     .sort((a: Blog, b: Blog) => a.likes - b.likes)
     .reverse()
     .slice(0, n);
 };
 
 export const getBlogsRecentlyAdded = (state: any, n: number) => {
-  return state.blogs.blogs.reverse().slice(0, n);
+  const returnArray = [...state.blogs.blogs];
+  return returnArray.reverse().slice(0, n);
 };

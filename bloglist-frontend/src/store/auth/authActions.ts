@@ -3,6 +3,7 @@ import loginService from '../../services/login';
 import { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { User } from '../../common/types';
+import { SET_USER, LOGOUT, SET_TOKEN, LOGIN } from './types';
 
 export const login = (
   username: string,
@@ -13,7 +14,7 @@ export const login = (
     blogService.api.token = user.token;
     window.localStorage.setItem('loggedUser', JSON.stringify(user));
     dispatch({
-      type: 'LOGIN',
+      type: LOGIN,
       data: user,
     });
   };
@@ -23,7 +24,7 @@ export const logout = (): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
     window.localStorage.removeItem('loggedUser');
     blogService.api.token = null;
     dispatch({
-      type: 'LOGOUT',
+      type: LOGOUT,
     });
   };
 };
@@ -31,9 +32,9 @@ export const setUser = (
   user: any,
 ): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
-    blogService.api.token = user.token;
+    blogService.api.token = user?.token;
     dispatch({
-      type: 'SET_USER',
+      type: SET_USER,
       data: user,
     });
   };
@@ -44,7 +45,7 @@ export const setToken = (
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     blogService.api.token = token;
     dispatch({
-      type: 'SET_TOKEN',
+      type: SET_TOKEN,
       data: token,
     });
   };

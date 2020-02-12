@@ -23,7 +23,7 @@ const App = (props: any) => {
     if (loggedUserJSON) {
       const currentUser = JSON.parse(loggedUserJSON);
       props.setUser(currentUser);
-    } else props.setUser({});
+    } else props.setUser(null);
   }, []);
 
   return (

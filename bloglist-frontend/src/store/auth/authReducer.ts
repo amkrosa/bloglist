@@ -7,7 +7,7 @@ import {
   SET_TOKEN,
 } from './types';
 
-const initialState: AuthState = {
+const initialState: AuthState | null = {
   token: '',
   username: '',
   id: '',
