@@ -14,7 +14,7 @@ import BlogSingle from './components/blog/Blog/BlogSingle';
 import Profile from './components/profile';
 import NewBlogForm from './components/blog/Blog/BlogNew';
 import Blog from './components/blog/Blog';
-//import Register from './components/register/Register';
+import Register from './components/register/Register';
 
 const Routes = (props: any) => {
   return (
@@ -25,9 +25,9 @@ const Routes = (props: any) => {
       <Route exact path="/blogs">
         <Blog />
       </Route>
-      {/*<Route exact path="/register">
+      <Route exact path="/register">
         <Register />
-  </Route>*/}
+      </Route>
       <ProtectedRoute
         exact
         path="/users/:id"

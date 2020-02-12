@@ -19,7 +19,7 @@ const BlogList = (props: any) => {
 
   return (
     <Grid centered verticalAlign="middle" columns={1}>
-      <Grid.Column width={10}>
+      <Grid.Column width={14}>
         {props.pending ? (
           <Loader className="spinner" active />
         ) : (

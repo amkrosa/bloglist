@@ -27,6 +27,7 @@ const Home: React.FC = (props: any) => {
             container
             divided
             padded
+            stackable
             columns="equal"
             direction="column"
             justify="center"

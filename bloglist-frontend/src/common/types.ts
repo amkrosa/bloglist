@@ -2,8 +2,9 @@ export interface User {
   id?: string;
   username: string;
   name: string;
-  blogs: Blog[];
-  comments: Comment[];
+  blogs?: Blog[];
+  comments?: Comment[];
+  password?: string;
 }
 
 export interface Comment {

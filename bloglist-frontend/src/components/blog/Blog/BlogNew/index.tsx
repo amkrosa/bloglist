@@ -20,10 +20,10 @@ const BlogNew = (props: any) => {
     };
     try {
       props.addBlog(newBlog, props.history);
-      props.setNotification('Blog succesfully added', 'success');
+      props.setNotification('Blog succesfully added.', 'success');
     } catch (e) {
       console.error(e);
-      props.setNotification('An error has occured', 'error');
+      props.setNotification('An error has occurred.', 'error');
     }
   };
 
